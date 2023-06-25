@@ -1,19 +1,18 @@
-const Database = require('../../src/utility/database');
+const db = require('../../src/utility/database');
 
 describe('Database Tests', () => {
-  let database;
 
   beforeAll(() => {
-    database = new Database(':memory:');
-    return database.initialize();
+    process.env.NODE_ENV = 'test';
+    return db.initialize();
   });
 
   afterAll(() => {
-    database.close();
+    db.closeConnection();
   });
 
   it('should create the users table', () => new Promise((resolve, reject) => {
-    database.db.get('SELECT name FROM sqlite_master WHERE type=\'table\' AND name=\'users\'', (err, row) => {
+    db.get('SELECT name FROM sqlite_master WHERE type=\'table\' AND name=\'users\'', (err, row) => {
       if (err) {
         reject(err);
       } else if (row) {
@@ -25,7 +24,7 @@ describe('Database Tests', () => {
   }));
 
   it('should insert two users into the users table', () => new Promise((resolve, reject) => {
-    database.db.all('SELECT * FROM users', (err, rows) => {
+    db.all('SELECT * FROM users', (err, rows) => {
       if (err) {
         reject(err);
       } else if (rows) {

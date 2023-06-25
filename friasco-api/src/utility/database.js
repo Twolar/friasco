@@ -1,16 +1,24 @@
 const sqlite3 = require('sqlite3').verbose();
 const { logger } = require('./logger');
 
-const dbSource = process.env.DBSOURCE || 'friasco.db';
+const dbSource = process.env.DBSOURE || 'friasco.db';
 
-let db = new sqlite3.Database(dbSource, (err) => {
-  if (err) {
-    logger.err(`Database::constructor - ${err.message}`);
-    throw err;
-  } else {
-    logger.info(`Database::constructor - Connected to ${dbSource} database successfully`);
-  }
-});
+let db;
+
+if (process.env.NODE_ENV === 'test') {
+  db = new sqlite3.Database(':memory:');
+  logger.info(`Database::constructor - Created and connected to test memory database successfully`);
+} else {
+  db = new sqlite3.Database(dbSource, (err) => {
+    if (err) {
+      logger.err(`Database::constructor - ${err.message}`);
+      throw err;
+    } else {
+      logger.info(`Database::constructor - Connected to ${dbSource} database successfully`);
+      db.initialize();
+    }
+  });
+}
 
 db.initialize = () => {
   db.serialize(() => {
@@ -41,8 +49,7 @@ function initializeUserTable() {
     if (err) {
       logger.info('Database::initializeUserTable - ' + err.message);
     } else {
-      logger.info('Database::initializeUserTable - Creating fresh users table');
-      logger.info('Database::initializeUserTable - Inserting example rows into user table');
+      logger.info('Database::initializeUserTable - Creating fresh users table and inserting example rows');
       const insertUserSQL = 'INSERT INTO users (email, username, password) VALUES (?,?,?)';
       db.run(insertUserSQL, ['taylor@friasco.com', 'tbennett', 'test123']);
       db.run(insertUserSQL, ['filip@friasco.com', 'fpopovich', 'test123']);
