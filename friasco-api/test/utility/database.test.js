@@ -1,7 +1,6 @@
 const db = require('../../src/utility/database');
 
-describe('Database Tests', () => {
-
+describe('SQLite Database Initialisation Tests', () => {
   beforeAll(() => {
     process.env.NODE_ENV = 'test';
     return db.initialize();
@@ -18,7 +17,7 @@ describe('Database Tests', () => {
       } else if (row) {
         resolve();
       } else {
-        reject(new Error('Table not found'));
+        reject(new Error('Users table not found'));
       }
     });
   }));

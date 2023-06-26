@@ -7,7 +7,7 @@ let db;
 
 if (process.env.NODE_ENV === 'test') {
   db = new sqlite3.Database(':memory:');
-  logger.info(`Database::constructor - Created and connected to test memory database successfully`);
+  logger.info('Database::constructor - Created and connected to test memory database successfully');
 } else {
   db = new sqlite3.Database(dbSource, (err) => {
     if (err) {
@@ -24,17 +24,17 @@ db.initialize = () => {
   db.serialize(() => {
     initializeUserTable();
   });
-}
+};
 
 db.closeConnection = () => {
   db.close((err) => {
     if (err) {
-      logger.error('Database::close - ' + err.message);
+      logger.error(`Database::close - ${err.message}`);
     } else {
       logger.info(`Database::close - Closed connection to ${dbSource} database successfully`);
     }
-  })
-}
+  });
+};
 
 function initializeUserTable() {
   const createUserTableSQL = `
@@ -47,7 +47,7 @@ function initializeUserTable() {
   `;
   db.run(createUserTableSQL, (err) => {
     if (err) {
-      logger.info('Database::initializeUserTable - ' + err.message);
+      logger.info(`Database::initializeUserTable - ${err.message}`);
     } else {
       logger.info('Database::initializeUserTable - Creating fresh users table and inserting example rows');
       const insertUserSQL = 'INSERT INTO users (email, username, password) VALUES (?,?,?)';
