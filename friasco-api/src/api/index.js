@@ -1,11 +1,17 @@
 const express = require('express');
 
-// Route Definitions
+// Require Route Modules
 const users = require('./routes/users');
 
 const router = express.Router();
 
-// Use Routes
+// Add Routes to router
 router.use('/users', users);
+router.use('/', (req, res) => {
+    res.json({
+        message: 'success',
+        tempFeedback: 'ApiBase',
+    })
+  });
 
 module.exports = router;
