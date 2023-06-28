@@ -20,6 +20,7 @@ async function GetUser(req) {
       if (error) {
         return reject(error);
       }
+      // TODO: Exclude user password from result
       resolve(result);
     });
   });
