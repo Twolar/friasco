@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   logger.info('Users::GetUsers - Initiated');
   try {
-    res.json(userController.GetUsers());
+    res.json(usersController.GetUsers());
   } catch (error) {
     res.status(400).json({
       message: error.message,
@@ -45,7 +45,7 @@ router.get('/:id', async (req, res, next) => {
 router.post('/new', (req, res) => {
   logger.info('Users::NewUser - Initiated');
   try {
-    res.json(userController.NewUser(req));
+    res.json(usersController.NewUser(req));
   } catch (error) {
     res.status(400).json({
       message: error.message,
@@ -60,7 +60,7 @@ router.post('/new', (req, res) => {
 router.patch('/:id', (req, res) => {
   logger.info('Users::UpdateUser - Initiated');
   try {
-    res.json(userController.UpdateUser(req));
+    res.json(usersController.UpdateUser(req));
   } catch (error) {
     res.status(400).json({
       message: error.message,
@@ -75,7 +75,7 @@ router.patch('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   logger.info('Users::DeleteUser - Initiated');
   try {
-    res.json(userController.DeleteUser(req));
+    res.json(usersController.DeleteUser(req));
   } catch (error) {
     res.status(400).json({
       message: error.message,
