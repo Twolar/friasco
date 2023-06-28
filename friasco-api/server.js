@@ -17,4 +17,4 @@ app.listen(port, () => {
   logger.info(`Friasco Application listening on ${port}`);
 });
 
-module.exports = app
+module.exports = app;
