@@ -20,16 +20,23 @@ router.get('/', (req, res) => {
 });
 
 // GetUser
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res, next) => {
   logger.info('Users::GetUser - Initiated');
   try {
-    res.json(userController.GetUser(req));
+    var user = await userController.GetUser(req);
+    if (user) {
+      res.status(200).json({
+        user: user,
+      });
+    } else {
+      res.status(204).json();
+    }
   } catch (error) {
     res.status(400).json({
       message: error.message,
     });
     logger.error(`Users::GetUser - Failed: ${error}`);
-    return;
+    next(error);
   }
   logger.info('Users::GetUser - Finished');
 });

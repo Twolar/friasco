@@ -1,3 +1,6 @@
+const { logger } = require('../../utility/logger')
+const db = require('../../utility/database');
+
 function GetUsers() {
   const response = {
     message: 'success',
@@ -6,12 +9,20 @@ function GetUsers() {
   return response;
 }
 
-function GetUser(req) {
-  const response = {
-    message: 'success',
-    tempFeedback: `GetUser: ${req.params.id}`,
-  };
-  return response;
+async function GetUser(req) {
+  return new Promise((resolve, reject) => {
+    // TODO: sql injection
+    var sql = 'SELECT * FROM users WHERE id = ?'
+    var id = req.params.id
+
+    // TODO: Refeactor to have this inside user model?
+    db.get(sql, id, (error, result) => {
+      if (error) {
+        return reject(error);
+      }
+      resolve(result);      
+    });
+  });
 }
 
 function NewUser(req) {
