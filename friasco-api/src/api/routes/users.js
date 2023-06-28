@@ -1,6 +1,6 @@
 const express = require('express');
 const { logger } = require('../../utility/logger');
-const userController = require('../controllers/usersController');
+const usersController = require('../controllers/usersController');
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 router.get('/:id', async (req, res, next) => {
   logger.info('Users::GetUser - Initiated');
   try {
-    var user = await userController.GetUser(req);
+    var user = await usersController.GetUser(req);
     if (user) {
       res.status(200).json({
         user: user,
