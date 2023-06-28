@@ -1,4 +1,4 @@
-const { logger } = require('../../utility/logger')
+const { logger } = require('../../utility/logger');
 const db = require('../../utility/database');
 
 function GetUsers() {
@@ -12,15 +12,15 @@ function GetUsers() {
 async function GetUser(req) {
   return new Promise((resolve, reject) => {
     // TODO: sql injection
-    var sql = 'SELECT * FROM users WHERE id = ?'
-    var id = req.params.id
+    const sql = 'SELECT * FROM users WHERE id = ?';
+    const { id } = req.params;
 
     // TODO: Refeactor to have this inside user model?
     db.get(sql, id, (error, result) => {
       if (error) {
         return reject(error);
       }
-      resolve(result);      
+      resolve(result);
     });
   });
 }

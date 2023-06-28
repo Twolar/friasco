@@ -23,10 +23,10 @@ router.get('/', (req, res) => {
 router.get('/:id', async (req, res, next) => {
   logger.info('Users::GetUser - Initiated');
   try {
-    var user = await usersController.GetUser(req);
+    const user = await usersController.GetUser(req);
     if (user) {
       res.status(200).json({
-        user: user,
+        user,
       });
     } else {
       res.status(204).json();
