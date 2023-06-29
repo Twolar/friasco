@@ -1,14 +1,24 @@
 const express = require('express');
 const { logger } = require('../../utility/logger');
-const usersController = require('../controllers/usersController');
+const User = require('../../models/user');
 
 const router = express.Router();
 
+// TODO: appropriate response codes
+// TODO: response body?
+
 // GetUsers
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   logger.info('Users::GetUsers - Initiated');
   try {
-    res.json(usersController.GetUsers());
+    
+    const result = await User.getAll();
+
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(204).json();
+    }
   } catch (error) {
     res.status(400).json({
       message: error.message,
@@ -23,11 +33,11 @@ router.get('/', (req, res) => {
 router.get('/:id', async (req, res, next) => {
   logger.info('Users::GetUser - Initiated');
   try {
-    const user = await usersController.GetUser(req);
-    if (user) {
-      res.status(200).json({
-        user,
-      });
+
+    const result = await User.getById(req.params.id);
+
+    if (result) {
+      res.status(200).json(result);
     } else {
       res.status(204).json();
     }
@@ -42,10 +52,15 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // NewUser
-router.post('/new', (req, res) => {
+router.post('/new', async (req, res) => {
   logger.info('Users::NewUser - Initiated');
   try {
-    res.json(usersController.NewUser(req));
+    const result = await User.createNew(req.body.username, req.body.password);
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(204).json();
+    }
   } catch (error) {
     res.status(400).json({
       message: error.message,
@@ -57,10 +72,17 @@ router.post('/new', (req, res) => {
 });
 
 // UpdateUser
-router.patch('/:id', (req, res) => {
+router.patch('/:id', async (req, res) => {
   logger.info('Users::UpdateUser - Initiated');
   try {
-    res.json(usersController.UpdateUser(req));
+
+    const result = await User.updateById(req.params.id, req.body.username, req.body.password);
+
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(204).json();
+    }
   } catch (error) {
     res.status(400).json({
       message: error.message,
@@ -72,10 +94,17 @@ router.patch('/:id', (req, res) => {
 });
 
 // DeleteUser
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   logger.info('Users::DeleteUser - Initiated');
   try {
-    res.json(usersController.DeleteUser(req));
+
+    const result = await User.deleteById(req.params.id);
+
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(204).json();
+    }
   } catch (error) {
     res.status(400).json({
       message: error.message,
