@@ -7,8 +7,6 @@ class User {
     this.password = password;
   }
 
-  // TODO: SQL Injection...
-
   static async getAll() {
     return new Promise((resolve, reject) => {
       const query = 'SELECT * FROM users';
@@ -40,10 +38,10 @@ class User {
     });
   }
 
-  static async createNew(username, password) {
+  static async createNew(email, username, password) {
     return new Promise((resolve, reject) => {
-      const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
-      db.run(query, [username, password], function (error) {
+      const query = 'INSERT INTO users (email, username, password) VALUES (?, ?, ?)';
+      db.run(query, [email, username, password], function (error) {
         if (error) {
           reject(error);
         } else {
@@ -54,10 +52,10 @@ class User {
     });
   }
 
-  static async updateById(id, username, password) {
+  static async updateById(id, email, username, password) {
     return new Promise((resolve, reject) => {
-      const query = 'UPDATE users SET username = ?, password = ? WHERE id = ?';
-      db.run(query, [username, password, id], (error) => {
+      const query = 'UPDATE users SET email = ?, username = ?, password = ? WHERE id = ?';
+      db.run(query, [email, username, password, id], (error) => {
         if (error) {
           reject(error);
         } else {
