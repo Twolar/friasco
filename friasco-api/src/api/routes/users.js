@@ -11,7 +11,6 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   logger.info('Users::GetUsers - Initiated');
   try {
-    
     const result = await User.getAll();
 
     if (result) {
@@ -33,7 +32,6 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res, next) => {
   logger.info('Users::GetUser - Initiated');
   try {
-
     const result = await User.getById(req.params.id);
 
     if (result) {
@@ -55,7 +53,7 @@ router.get('/:id', async (req, res, next) => {
 router.post('/new', async (req, res) => {
   logger.info('Users::NewUser - Initiated');
   try {
-    const result = await User.createNew(req.body.username, req.body.password);
+    const result = await User.createNew(req.body.email, req.body.username, req.body.password);
     if (result) {
       res.status(200).json(result);
     } else {
@@ -75,8 +73,7 @@ router.post('/new', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   logger.info('Users::UpdateUser - Initiated');
   try {
-
-    const result = await User.updateById(req.params.id, req.body.username, req.body.password);
+    const result = await User.updateById(req.params.id, req.body.email, req.body.username, req.body.password);
 
     if (result) {
       res.status(200).json(result);
@@ -97,7 +94,6 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   logger.info('Users::DeleteUser - Initiated');
   try {
-
     const result = await User.deleteById(req.params.id);
 
     if (result) {
