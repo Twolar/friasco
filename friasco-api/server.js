@@ -12,9 +12,9 @@ app.use(express.json());
 app.use('/api/v1', apiBase);
 app.use(express.urlencoded());
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Friasco Application listening on ${port}`);
   logger.info(`Friasco Application listening on ${port}`);
 });
 
-module.exports = app;
+module.exports = server;
