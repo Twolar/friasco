@@ -69,6 +69,15 @@ describe('User Endpoints', () => {
       expect(res.body).toHaveProperty('user');
       expect(res.body.user).toEqual(testUser);
     });
+
+    it('should respond with 404 not found if ID does not exist', async () => {
+      const res = await request(server)
+      .get(`${baseUrl}/users/956845`)
+      .send()
+
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toEqual('not found');
+    })
   });
 
   describe('Create user', () => {
