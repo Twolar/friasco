@@ -143,7 +143,7 @@ describe('User Endpoints', () => {
       expect(res.body).toHaveProperty('message');
       expect(res.body.message).toEqual('success');
 
-      const deletedUser = await User.getById(createdUserId)
+      const deletedUser = await User.getById(createdUserId);
       expect(deletedUser).toEqual(null);
     });
   });
