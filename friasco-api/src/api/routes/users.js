@@ -4,9 +4,14 @@ const User = require('../../models/user');
 
 const router = express.Router();
 
+// User management/these routes subject to change and is currently acting as a placeholder
+// As not looking to reinvent the wheel with user management
+// But should be good enough for now to build everything else we need off of it for mvp...
+
 // TODO: Login endpoint
-// TODO: appropriate response codes
-// TODO: response body?
+// As an exercise could be fun to add:
+// - Password hash/salting
+// - JWT generation & authentication for endpoints
 
 // GetUsers
 router.get('/', async (req, res) => {
