@@ -1,11 +1,15 @@
 const db = require('../utility/database');
 
 class User {
-  constructor(id, username, password) {
+  constructor(id, email, username, password) {
     this.id = id;
+    this.email = email;
     this.username = username;
     this.password = password;
   }
+
+  // TODO: Investigate SQL injection? Passing as params already helps as escaped, but do we need futher protection?
+  // TODO: Test methods
 
   static async getAll() {
     return new Promise((resolve, reject) => {
@@ -31,7 +35,7 @@ class User {
         } else if (!row) {
           resolve(null);
         } else {
-          const user = new User(row.id, row.username, row.password);
+          const user = new User(row.id, row.email, row.username, row.password);
           resolve(user);
         }
       });
@@ -59,7 +63,7 @@ class User {
         if (error) {
           reject(error);
         } else {
-          resolve();
+          resolve(id);
         }
       });
     });
@@ -72,7 +76,7 @@ class User {
         if (error) {
           reject(error);
         } else {
-          resolve();
+          resolve(id);
         }
       });
     });
