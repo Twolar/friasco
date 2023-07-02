@@ -50,9 +50,6 @@ function initializeUserTable() {
       logger.info(`Database::initializeUserTable - ${err.message}`);
     } else {
       logger.info('Database::initializeUserTable - Creating fresh users table and inserting example rows');
-      const insertUserSQL = 'INSERT INTO users (email, username, password) VALUES (?,?,?)';
-      db.run(insertUserSQL, ['taylor@friasco.com', 'tbennett', 'test123']);
-      db.run(insertUserSQL, ['filip@friasco.com', 'fpopovich', 'test123']);
     }
   });
 }
