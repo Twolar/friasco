@@ -9,7 +9,6 @@ class User {
   }
 
   // TODO: Investigate SQL injection? Passing as params already helps as escaped, but do we need futher protection?
-  // TODO: Test methods
 
   static async getAll() {
     return new Promise((resolve, reject) => {

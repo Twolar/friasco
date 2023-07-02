@@ -49,7 +49,7 @@ function initializeUserTable() {
     if (err) {
       logger.info(`Database::initializeUserTable - ${err.message}`);
     } else {
-      logger.info('Database::initializeUserTable - Creating fresh users table and inserting example rows');
+      logger.info('Database::initializeUserTable - Creating fresh users table');
     }
   });
 }
