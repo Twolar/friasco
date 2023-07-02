@@ -126,9 +126,9 @@ describe('User Endpoints', () => {
   describe('Delete user', () => {
     it('should delete a single user', async () => {
       const testUser = {
-        email: 'getUser@test.com',
-        username: 'getUser',
-        password: 'getUserPassword',
+        email: 'deleteUser@test.com',
+        username: 'deleteUser',
+        password: 'deleteUserPassword',
       };
       const createdUserId = await User.createNew(testUser.email, testUser.username, testUser.password);
       testUser.id = createdUserId;
