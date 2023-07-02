@@ -4,6 +4,7 @@ const User = require('../../models/user');
 
 const router = express.Router();
 
+// TODO: Login endpoint
 // TODO: appropriate response codes
 // TODO: response body?
 
@@ -11,10 +12,13 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   logger.info('Users::GetUsers - Initiated');
   try {
-    const result = await User.getAll();
+    const users = await User.getAll();
 
-    if (result) {
-      res.status(200).json(result);
+    if (users) {
+      res.status(200).json({
+        message: 'success',
+        users,
+      });
     } else {
       res.status(204).json();
     }
@@ -32,12 +36,13 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res, next) => {
   logger.info('Users::GetUser - Initiated');
   try {
-    const result = await User.getById(req.params.id);
+    const user = await User.getById(req.params.id);
 
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      res.status(204).json();
+    if (user) {
+      res.status(200).json({
+        message: 'success',
+        user,
+      });
     }
   } catch (error) {
     res.status(400).json({
@@ -53,11 +58,12 @@ router.get('/:id', async (req, res, next) => {
 router.post('/new', async (req, res) => {
   logger.info('Users::NewUser - Initiated');
   try {
-    const result = await User.createNew(req.body.email, req.body.username, req.body.password);
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      res.status(204).json();
+    const userId = await User.createNew(req.body.email, req.body.username, req.body.password);
+    if (userId) {
+      res.status(200).json({
+        message: 'success',
+        userId,
+      });
     }
   } catch (error) {
     res.status(400).json({
@@ -73,12 +79,13 @@ router.post('/new', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   logger.info('Users::UpdateUser - Initiated');
   try {
-    const result = await User.updateById(req.params.id, req.body.email, req.body.username, req.body.password);
+    const userId = await User.updateById(req.params.id, req.body.email, req.body.username, req.body.password);
 
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      res.status(204).json();
+    if (userId) {
+      res.status(200).json({
+        message: 'success',
+        userId,
+      });
     }
   } catch (error) {
     res.status(400).json({
@@ -94,12 +101,12 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   logger.info('Users::DeleteUser - Initiated');
   try {
-    const result = await User.deleteById(req.params.id);
+    const userId = await User.deleteById(req.params.id);
 
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      res.status(204).json();
+    if (userId) {
+      res.status(200).json({
+        message: 'success',
+      });
     }
   } catch (error) {
     res.status(400).json({
