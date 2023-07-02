@@ -5,8 +5,6 @@ const User = require('../../src/models/user');
 
 const baseUrl = '/api/v1';
 
-// TODO: Tests for errors + response codes etc
-
 describe('User Endpoints', () => {
   beforeAll(async () => {
     process.env.NODE_ENV = 'test';
