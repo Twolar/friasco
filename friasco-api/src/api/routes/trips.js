@@ -4,8 +4,6 @@ const Trip = require('../../models/trip');
 
 const router = express.Router();
 
-// TODO: route or filter for getting trips for specific user...
-
 // GetTrips
 router.get('/', async (req, res) => {
   logger.info('Trips::GetTrips - Initiated');
