@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
 });
 
 // GetUser
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', async (req, res) => {
   logger.info('Users::GetUser - Initiated');
   try {
     const user = await User.getById(req.params.id);
@@ -58,7 +58,7 @@ router.get('/:id', async (req, res, next) => {
       message: error.message,
     });
     logger.error(`Users::GetUser - Failed: ${error}`);
-    next(error);
+    return;
   }
   logger.info('Users::GetUser - Finished');
 });
