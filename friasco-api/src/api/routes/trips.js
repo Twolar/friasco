@@ -6,152 +6,152 @@ const router = express.Router();
 
 // GetTrips
 router.get('/', async (req, res, next) => {
-  logger.info('Trips::GetTrips - Initiated');
+  logger.info('TripsRoute::GetTrips - Initiated');
   try {
     const trips = await Trip.getAll();
 
     if (trips.length > 0) {
-      logger.info('Trips::GetTrips - Success');
+      logger.info('TripsRoute::GetTrips - Success');
       res.status(200).json({
         message: 'success',
         trips,
       });
     } else {
-      logger.info('Trips::GetTrips -  No trips found');
+      logger.info('TripsRoute::GetTrips -  No trips found');
       res.status(204).json();
     }
   } catch (error) {
-    logger.error(`Trips::GetTrips - Failed: ${error}`);
+    logger.error(`TripsRoute::GetTrips - Failed: ${error}`);
     res.status(400).json({
       message: error.message,
     });
     next(error);
   }
-  logger.info('Trips::GetTrips - Finished');
+  logger.info('TripsRoute::GetTrips - Finished');
 });
 
 // GetTrip
 router.get('/:id', async (req, res, next) => {
-  logger.info('Trips::GetTrip - Initiated');
+  logger.info('TripsRoute::GetTrip - Initiated');
   try {
     const trip = await Trip.getById(req.params.id);
 
     if (trip) {
-      logger.info('Trips::GetTrip - Success');
+      logger.info('TripsRoute::GetTrip - Success');
       res.status(200).json({
         message: 'success',
         trip,
       });
     } else {
-      logger.info(`Trips::GetTrip - Trip not found`);
+      logger.info(`TripsRoute::GetTrip - Trip not found`);
       res.status(404).json({
         message: 'not found',
       });
     }
   } catch (error) {
-    logger.error(`Trips::GetTrip - Failed: ${error}`);
+    logger.error(`TripsRoute::GetTrip - Failed: ${error}`);
     res.status(400).json({
       message: error.message,
     });
     next(error);
   }
-  logger.info('Trips::GetTrip - Finished');
+  logger.info('TripsRoute::GetTrip - Finished');
 });
 
 // NewTrip
 router.post('/new', async (req, res, next) => {
-  logger.info('Trips::NewTrip - Initiated');
+  logger.info('TripsRoute::NewTrip - Initiated');
   try {
     const newTripData = new Trip(null, req.body.userId, req.body.location, req.body.startDate, req.body.endDate, req.body.status, req.body.privacyStatus);
     const createdTripId = await Trip.createNew(newTripData);
 
     if (createdTripId) {
-      logger.info('Trips::NewTrip - Success');
+      logger.info('TripsRoute::NewTrip - Success');
       res.status(201).json({
         message: 'success',
         id: createdTripId,
       });
     } else {
-      logger.info(`Trips::NewTrip - Something went wrong`);
+      logger.info(`TripsRoute::NewTrip - Something went wrong`);
       res.status(500).json({
         message: 'internal server error',
       });
     }
   } catch (error) {
-    logger.error(`Trips::NewTrip - Failed: ${error}`);
+    logger.error(`TripsRoute::NewTrip - Failed: ${error}`);
     res.status(400).json({
       message: error.message,
     });
     next(error);
   }
-  logger.info('Trips::NewTrip - Finished');
+  logger.info('TripsRoute::NewTrip - Finished');
 });
 
 // UpdateTrip
 router.patch('/:id', async (req, res, next) => {
-  logger.info('Trips::UpdateTrip - Initiated');
+  logger.info('TripsRoute::UpdateTrip - Initiated');
   try {
     const updateTripData = new Trip(req.params.id, req.body.userId, req.body.location, req.body.startDate, req.body.endDate, req.body.status, req.body.privacyStatus);
     const changes = await Trip.updateById(updateTripData);
 
     if (changes) {
-      logger.info('Trips::UpdateTrip - Success');
+      logger.info('TripsRoute::UpdateTrip - Success');
       res.send({
         message: 'success',
         changes,
       });
     } else if (changes === 0) {
-      logger.info('Trips::UpdateTrip - No row was changed');
+      logger.info('TripsRoute::UpdateTrip - No row was changed');
       res.status(404).json({
         message: 'not found',
       });
     } else {
-      logger.info(`Trips::UpdateTrip - Something went wrong`);
+      logger.info(`TripsRoute::UpdateTrip - Something went wrong`);
       res.status(500).json({
         message: 'internal server error',
       });
     }
   } catch (error) {
-    logger.error(`Trips::UpdateTrip - Failed: ${error}`);
+    logger.error(`TripsRoute::UpdateTrip - Failed: ${error}`);
     res.status(400).json({
       message: error.message,
     });
     next(error);
   }
-  logger.info('Trips::UpdateTrip - Finished');
+  logger.info('TripsRoute::UpdateTrip - Finished');
 });
 
 // DeleteTrip
 router.delete('/:id', async (req, res, next) => {
-  logger.info('Trips::DeleteTrip - Initiated');
+  logger.info('TripsRoute::DeleteTrip - Initiated');
   try {
     const changes = await Trip.deleteById(req.params.id);
 
     if (changes) {
-      logger.info('Trips::DeleteTrip - Success');
+      logger.info('TripsRoute::DeleteTrip - Success');
       res.send({
         message: 'success',
         changes,
       });
     } else if (changes === 0) {
-      logger.info('Trips::DeleteTrip - Trip not found');
+      logger.info('TripsRoute::DeleteTrip - Trip not found');
       res.status(404).json({
         message: 'not found',
       });
     } else {
-      logger.info(`Trips::DeleteTrip - Something went wrong`);
+      logger.info(`TripsRoute::DeleteTrip - Something went wrong`);
       res.status(500).json({
         message: 'internal server error',
       });
     }
   } catch (error) {
-    logger.error(`Trips::DeleteTrip - Failed: ${error}`);
+    logger.error(`TripsRoute::DeleteTrip - Failed: ${error}`);
     res.status(400).json({
       message: error.message,
     });
     next(error);
   }
-  logger.info('Trips::DeleteTrip - Finished');
+  logger.info('TripsRoute::DeleteTrip - Finished');
 });
 
 module.exports = router;
