@@ -3,7 +3,7 @@ const logger = require('../utility/logger');
 
 class Trip {
   constructor(id, userId, location, startDate, endDate, status, privacyStatus) {
-    logger.info('Trip::Constructor - Initiated');
+    logger.info('Trip::constructor - Initiated');
     this.id = id;
     this.userId = userId;
     this.location = location;

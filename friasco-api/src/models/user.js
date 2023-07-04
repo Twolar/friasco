@@ -3,7 +3,7 @@ const logger = require('../utility/logger');
 
 class User {
   constructor(id, email, username, password) {
-    logger.info('User::Constructor - Initiated');
+    logger.info('User::constructor - Initiated');
     this.id = id;
     this.email = email;
     this.username = username;
