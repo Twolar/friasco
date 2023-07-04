@@ -1,14 +1,12 @@
 const User = require('../../src/models/user');
 const db = require('../../src/utility/database');
 
-jest.mock('pino', () => () => {
-  return {
-    info: jest.fn(),
-    error: jest.fn(),
-    warn: jest.fn(),
-    debug: jest.fn()
-  };
-});
+jest.mock('pino', () => () => ({
+  info: jest.fn(),
+  error: jest.fn(),
+  warn: jest.fn(),
+  debug: jest.fn(),
+}));
 
 describe('User Model', () => {
   beforeAll(async () => {

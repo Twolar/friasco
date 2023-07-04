@@ -43,7 +43,7 @@ router.get('/:id', async (req, res, next) => {
         trip,
       });
     } else {
-      logger.info(`TripsRoute::GetTrip - Trip not found`);
+      logger.info('TripsRoute::GetTrip - Trip not found');
       res.status(404).json({
         message: 'not found',
       });
@@ -72,7 +72,7 @@ router.post('/new', async (req, res, next) => {
         id: createdTripId,
       });
     } else {
-      logger.info(`TripsRoute::NewTrip - Something went wrong`);
+      logger.info('TripsRoute::NewTrip - Something went wrong');
       res.status(500).json({
         message: 'internal server error',
       });
@@ -106,7 +106,7 @@ router.patch('/:id', async (req, res, next) => {
         message: 'not found',
       });
     } else {
-      logger.info(`TripsRoute::UpdateTrip - Something went wrong`);
+      logger.info('TripsRoute::UpdateTrip - Something went wrong');
       res.status(500).json({
         message: 'internal server error',
       });
@@ -139,7 +139,7 @@ router.delete('/:id', async (req, res, next) => {
         message: 'not found',
       });
     } else {
-      logger.info(`TripsRoute::DeleteTrip - Something went wrong`);
+      logger.info('TripsRoute::DeleteTrip - Something went wrong');
       res.status(500).json({
         message: 'internal server error',
       });
