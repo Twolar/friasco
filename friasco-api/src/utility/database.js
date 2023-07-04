@@ -61,7 +61,7 @@ function initializeUserTable() {
 function initializeTripTable() {
   logger.info('Database::initializeTripTable - Initiated');
   const createTripTableSQL = `
-    CREATE TABLE IF NOT EXISTS trips (
+    CREATE TABLE trips (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id INTEGER,
       location TEXT,
