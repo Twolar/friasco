@@ -11,25 +11,25 @@ jest.mock('pino', () => () => ({
 describe('Server', () => {
   afterAll(async () => {
     server.close();
-    });
+  });
 
-    it('should return 404 for route that does not exist', async () => {
-        const res = await request(server)
-        .get(`/dksadklalkds`)
-        .send();
+  it('should return 404 for route that does not exist', async () => {
+    const res = await request(server)
+      .get('/dksadklalkds')
+      .send();
 
-        expect(res.statusCode).toEqual(404);
-        expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toEqual('does not exist');
-    });
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty('message');
+    expect(res.body.message).toEqual('does not exist');
+  });
 
-    it('should return 404 for route /api/v1 that does not exist', async () => {
-        const res = await request(server)
-        .get(`/api/v1/fklsdklfskl`)
-        .send();
+  it('should return 404 for route /api/v1 that does not exist', async () => {
+    const res = await request(server)
+      .get('/api/v1/fklsdklfskl')
+      .send();
 
-        expect(res.statusCode).toEqual(404);
-        expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toEqual('does not exist');
-    });
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty('message');
+    expect(res.body.message).toEqual('does not exist');
+  });
 });
