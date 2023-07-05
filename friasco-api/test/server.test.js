@@ -38,7 +38,7 @@ describe('Server', () => {
       .get('/api/v1/trips')
       .send();
 
-      // Get 500 because no database table initialzed
+    // Get 500 because no database table initialzed
     expect(res.statusCode).toEqual(500);
   });
 });
