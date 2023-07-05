@@ -32,4 +32,13 @@ describe('Server', () => {
     expect(res.body).toHaveProperty('message');
     expect(res.body.message).toEqual('does not exist');
   });
+
+  it('should not return 404 for route /api/v1 that does exist', async () => {
+    const res = await request(server)
+      .get('/api/v1/trips')
+      .send();
+
+      // Get 500 because no database table initialzed
+    expect(res.statusCode).toEqual(500);
+  });
 });
