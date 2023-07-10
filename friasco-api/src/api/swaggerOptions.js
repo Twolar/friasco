@@ -14,7 +14,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: [ // files containing swagger annotations as above
+  apis: [ // files containing swagger annotations
     './src/api/routes/users.js',
     './src/api/routes/trips.js',
   ],
