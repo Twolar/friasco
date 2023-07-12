@@ -65,7 +65,7 @@ describe('User Routes', () => {
       });
 
       const sql = 'DELETE FROM users';
-      const changes = await deleteAllUserRows(sql);
+      await deleteAllUserRows(sql);
 
       const res = await request(server)
         .get(`${baseUrl}/users`)

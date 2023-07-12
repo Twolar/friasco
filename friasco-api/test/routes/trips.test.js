@@ -57,7 +57,7 @@ describe('Trip Routes', () => {
       });
 
       const sql = 'DELETE FROM trips';
-      const changes = await deleteAllTripRows(sql);
+      await deleteAllTripRows(sql);
 
       const res = await request(server)
         .get(`${baseUrl}/trips`)
