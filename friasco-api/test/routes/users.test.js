@@ -10,7 +10,7 @@ jest.mock('pino', () => () => ({
   debug: jest.fn(),
 }));
 
-const baseUrl = '/api/v1';
+const baseUrl = '/v1';
 
 describe('User Routes', () => {
   beforeAll(async () => {
