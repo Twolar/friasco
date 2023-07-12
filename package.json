@@ -8,7 +8,9 @@
     "client": "npm run dev --prefix friasco-client",
     "dev": "concurrently \"npm run api\" \"npm run client\"",
 
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "api-test": "npm test --prefix friasco-api",
+    "client-test": "",
+    "test": "npm run api-test; npm run client-test",
 
     "api-lint-fix": "npm run lint-fix --prefix friasco-api",
     "client-lint-fix": "npm run lint --prefix friasco-client",
