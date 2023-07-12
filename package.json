@@ -13,8 +13,8 @@
     "test": "npm run api-test; npm run client-test",
 
     "api-lint-fix": "npm run lint-fix --prefix friasco-api",
-    "client-lint-fix": "npm run lint --prefix friasco-client",
-    "lint-fix": "npm run api-lint-fix; npm run client-lint-fix"
+    "client-lint": "npm run lint --prefix friasco-client",
+    "lint-fix": "npm run api-lint-fix; npm run client-lint"
   },
   "keywords": [],
   "author": "",
