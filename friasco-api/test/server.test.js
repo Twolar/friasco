@@ -27,7 +27,7 @@ describe('Server', () => {
 
   it('should return 404 for route /api/v1 that does not exist', async () => {
     const res = await request(server)
-      .get(baseUrl + '/fklsdklfskl')
+      .get(`${baseUrl}/fklsdklfskl`)
       .send();
 
     expect(res.statusCode).toEqual(404);
@@ -37,7 +37,7 @@ describe('Server', () => {
 
   it('should not return 404 for route /api/v1 that does exist', async () => {
     const res = await request(server)
-      .get(baseUrl+ '/trips')
+      .get(`${baseUrl}/trips`)
       .send();
 
     // Get 500 because no database table initialzed
