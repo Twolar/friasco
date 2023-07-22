@@ -1,26 +1,21 @@
-import "./style.css"
+import { ColorModeContext, useMode } from "./theme"
+import { CssBaseline, ThemeProvider } from "@mui/material" 
+import Topbar from './scenes/global/Topbar'
 
 function App() {
+  const [theme, colorMode] = useMode();
+
   return (
-    <>    
-      <form className="new-item-form">
-        <div className="form-row">
-          <label>New Item</label>
-          <input type="text"></input>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline /> 
+        <div className="app">
+          <main className="content">
+            <Topbar/>
+          </main>
         </div>
-        <button className="btn">Add</button>
-      </form>
-
-      <h1 className="header">Todo List</h1>
-
-      <ul className="list">
-        <li>
-          <label>
-            <input type="checkbox"/>TEST TITLE</label>
-            <button className="btn btn-danger">Delete</button>
-        </li>
-      </ul>
-    </>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   )
 }
 
