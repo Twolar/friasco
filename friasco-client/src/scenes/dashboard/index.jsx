@@ -1,5 +1,11 @@
+import { Box } from "@mui/material";
+
 const Dashboard = ()  => {
-    return <div>Dashboard</div>
+    return (
+        <Box display="flex" p={2}>
+            <div>Dashboard</div>
+        </Box>
+    )
 }
 
 export default Dashboard;
