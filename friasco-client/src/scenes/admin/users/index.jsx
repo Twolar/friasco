@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
@@ -13,11 +13,19 @@ const Users = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/v1/users/')
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        setUsers(data.users)
+    fetch("http://localhost:8000/v1/users/")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // TODO: Delete me - Temporary for display purposes until users built out more...
+        data.users.forEach((user, index) => {
+            if (index === 0) {
+                user.access = 'admin';
+            } else {
+                user.access = 'user';
+            }
+        });
+        setUsers(data.users);
       });
   }, []);
 
@@ -30,10 +38,10 @@ const Users = () => {
       cellClassName: "name-column--cell",
     },
     {
-        field: "email",
-        headerName: "Email",
-        flex: 1,
-      },
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+    },
     {
       field: "accessLevel",
       headerName: "Access Level",
@@ -93,9 +101,12 @@ const Users = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
+          },
         }}
       >
-        <DataGrid checkboxSelection rows={users} columns={columns} />
+        <DataGrid checkboxSelection rows={users} columns={columns} components={{ Toolbar: GridToolbar }} />
       </Box>
     </Box>
   );
