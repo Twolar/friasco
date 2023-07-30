@@ -68,7 +68,6 @@ const Users = () => {
     <Box m="0px 20px">
       <Header title="USERS" subtitle="Manage all users" />
       <Box
-        m="40px 0 0 0"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {

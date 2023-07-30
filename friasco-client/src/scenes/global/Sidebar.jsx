@@ -9,6 +9,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -158,7 +159,7 @@ const Sidebar = () => {
             <Item
               title='Users'
               to='/users'
-              icon={<PersonOutlineOutlinedIcon />}
+              icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
