@@ -1,16 +1,22 @@
 import { useState, useEffect } from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, Button, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import Header from "../../../components/Header";
+import NewUserForm from "../../../components/NewUserForm";
 
 const Users = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const [users, setUsers] = useState([]);
+  const [isNewUserFormVisible, setNewUserFormVisible] = useState(false);
+
+  const toggleNewUserFormVisibility = () => {
+    setNewUserFormVisible(!isNewUserFormVisible);
+  };
 
   useEffect(() => {
     fetch("http://localhost:8000/v1/users/")
@@ -19,11 +25,11 @@ const Users = () => {
         console.log(data);
         // TODO: Delete me - Temporary for display purposes until users built out more...
         data.users.forEach((user, index) => {
-            if (index === 0) {
-                user.access = 'admin';
-            } else {
-                user.access = 'user';
-            }
+          if (index === 0) {
+            user.access = "admin";
+          } else {
+            user.access = "user";
+          }
         });
         setUsers(data.users);
       });
@@ -74,7 +80,24 @@ const Users = () => {
 
   return (
     <Box m="0px 20px">
-      <Header title="USERS" subtitle="Manage all users" />
+      <Box display="flex" justifyContent="space-between">
+        <Box>
+          <Header title="USERS" subtitle="Manage all users" />
+        </Box>
+        <Box display="flex" alignItems="center">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={toggleNewUserFormVisibility}
+            sx={{ marginBottom: "15px" }}
+          >
+            {isNewUserFormVisible ? "HIDE" : "NEW USER"}
+          </Button>
+        </Box>
+      </Box>
+
+      <Box>{isNewUserFormVisible && <NewUserForm />}</Box>
+
       <Box
         height="75vh"
         sx={{
@@ -106,7 +129,12 @@ const Users = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={users} columns={columns} components={{ Toolbar: GridToolbar }} />
+        <DataGrid
+          checkboxSelection
+          rows={users}
+          columns={columns}
+          components={{ Toolbar: GridToolbar }}
+        />
       </Box>
     </Box>
   );
