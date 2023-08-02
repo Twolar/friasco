@@ -1,9 +1,18 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, Button, useTheme } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridToolbar,
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarDensitySelector,
+  GridToolbarExport,
+} from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+import AddIcon from "@mui/icons-material/Add";
 import Header from "../../../components/Header";
 import NewUserForm from "../../../components/NewUserForm";
 
@@ -12,11 +21,6 @@ const Users = () => {
   const colors = tokens(theme.palette.mode);
 
   const [users, setUsers] = useState([]);
-  const [isNewUserFormVisible, setNewUserFormVisible] = useState(false);
-
-  const toggleNewUserFormVisibility = () => {
-    setNewUserFormVisible(!isNewUserFormVisible);
-  };
 
   useEffect(() => {
     fetch("http://localhost:8000/v1/users/")
@@ -34,6 +38,36 @@ const Users = () => {
         setUsers(data.users);
       });
   }, []);
+
+  const CustomUsersGridToolbar = () => {
+    const [isNewUserFormVisible, setNewUserFormVisible] = useState(false);
+
+    const toggleNewUserFormVisibility = () => {
+      setNewUserFormVisible(!isNewUserFormVisible);
+    };
+
+    return (
+      <GridToolbarContainer>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={() => toggleNewUserFormVisibility()}
+        >
+          {isNewUserFormVisible ? "HIDE" : "NEW"}
+        </Button>
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
+        <GridToolbarExport />
+        {isNewUserFormVisible && (
+          <Box width="100%" mb="20px">
+            <NewUserForm />
+          </Box>
+        )}
+      </GridToolbarContainer>
+    );
+  };
 
   const columns = [
     { field: "id", headerName: "ID" },
@@ -80,26 +114,11 @@ const Users = () => {
 
   return (
     <Box m="0px 20px">
-      <Box display="flex" justifyContent="space-between">
-        <Box>
-          <Header title="USERS" subtitle="Manage all users" />
-        </Box>
-        <Box display="flex" alignItems="center">
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={toggleNewUserFormVisibility}
-            sx={{ marginBottom: "15px" }}
-          >
-            {isNewUserFormVisible ? "HIDE" : "NEW USER"}
-          </Button>
-        </Box>
-      </Box>
-
-      <Box>{isNewUserFormVisible && <NewUserForm />}</Box>
+      <Header title="USERS" subtitle="Manage all users" />
 
       <Box
         height="75vh"
+        width="100%"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -133,7 +152,7 @@ const Users = () => {
           checkboxSelection
           rows={users}
           columns={columns}
-          components={{ Toolbar: GridToolbar }}
+          components={{ Toolbar: CustomUsersGridToolbar }}
         />
       </Box>
     </Box>
