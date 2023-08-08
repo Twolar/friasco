@@ -17,7 +17,7 @@ function App() {
         <CssBaseline /> 
         <div className="app">
           <Sidebar />
-          <main className="content" style={{ flex: 1, overflow: 'hidden'}}>
+          <main className="content" style={{ flex: 1, overflowX: 'hidden'}}>
             <Topbar/>
             <Routes>
               <Route path ="/" element={<Dashboard />} />
