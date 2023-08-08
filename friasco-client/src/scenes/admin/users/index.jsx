@@ -80,7 +80,6 @@ const Users = () => {
       <Header title="USERS" subtitle="Manage all users" />
 
       <Box
-        height="75vh"
         width="100%"
         sx={{
           "& .MuiDataGrid-root": {
@@ -116,7 +115,13 @@ const Users = () => {
           rows={users}
           columns={columns}
           slots={{
-            toolbar: () => <CustomHideShowFormGridToolbar buttonName="CREATE" buttonIcon={<AddIcon />} formToShow={<NewUserForm />} />,
+            toolbar: () => (
+              <CustomHideShowFormGridToolbar
+                buttonName="CREATE"
+                buttonIcon={<AddIcon />}
+                formToShow={<NewUserForm />}
+              />
+            ),
           }}
         />
       </Box>
