@@ -1,19 +1,12 @@
 import { useState, useEffect } from "react";
-import { Box, Typography, Button, useTheme } from "@mui/material";
-import {
-  DataGrid,
-  GridToolbar,
-  GridToolbarContainer,
-  GridToolbarColumnsButton,
-  GridToolbarFilterButton,
-  GridToolbarDensitySelector,
-  GridToolbarExport,
-} from "@mui/x-data-grid";
+import { Box, Typography, useTheme } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import AddIcon from "@mui/icons-material/Add";
 import Header from "../../../components/Header";
+import CustomHideShowFormGridToolbar from "../../../components/CustomHideShowFormGridToolbar";
+import AddIcon from "@mui/icons-material/Add";
 import NewUserForm from "../../../components/NewUserForm";
 
 const Users = () => {
@@ -38,36 +31,6 @@ const Users = () => {
         setUsers(data.users);
       });
   }, []);
-
-  const CustomUsersGridToolbar = () => {
-    const [isNewUserFormVisible, setNewUserFormVisible] = useState(false);
-
-    const toggleNewUserFormVisibility = () => {
-      setNewUserFormVisible(!isNewUserFormVisible);
-    };
-
-    return (
-      <GridToolbarContainer>
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<AddIcon />}
-          onClick={() => toggleNewUserFormVisibility()}
-        >
-          {isNewUserFormVisible ? "HIDE" : "NEW"}
-        </Button>
-        <GridToolbarColumnsButton />
-        <GridToolbarFilterButton />
-        <GridToolbarDensitySelector />
-        <GridToolbarExport />
-        {isNewUserFormVisible && (
-          <Box width="100%" mb="20px">
-            <NewUserForm />
-          </Box>
-        )}
-      </GridToolbarContainer>
-    );
-  };
 
   const columns = [
     { field: "id", headerName: "ID" },
@@ -152,7 +115,9 @@ const Users = () => {
           checkboxSelection
           rows={users}
           columns={columns}
-          components={{ Toolbar: CustomUsersGridToolbar }}
+          slots={{
+            toolbar: () => <CustomHideShowFormGridToolbar buttonName="CREATE" buttonIcon={<AddIcon />} formToShow={<NewUserForm />} />,
+          }}
         />
       </Box>
     </Box>
