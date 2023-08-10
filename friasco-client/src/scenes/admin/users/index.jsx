@@ -8,6 +8,7 @@ import Header from "../../../components/Header";
 import CustomHideShowFormGridToolbar from "../../../components/CustomHideShowFormGridToolbar";
 import AddIcon from "@mui/icons-material/Add";
 import NewUserForm from "../../../components/NewUserForm";
+import { fetchUsers } from "../../../data/api";
 
 const Users = () => {
   const theme = useTheme();
@@ -16,20 +17,16 @@ const Users = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/v1/users/")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        // TODO: Delete me - Temporary for display purposes until users built out more...
-        data.users.forEach((user, index) => {
-          if (index === 0) {
-            user.access = "admin";
-          } else {
-            user.access = "user";
-          }
-        });
-        setUsers(data.users);
-      });
+    async function fetchData() {
+      try {
+        const initialUsers = await fetchUsers();
+        setUsers(initialUsers);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    }
+
+    fetchData();
   }, []);
 
   const columns = [

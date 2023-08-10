@@ -1,18 +1,34 @@
 import { Box, Button, TextField, useTheme } from "@mui/material";
-import { tokens } from "../theme";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "./Header";
 
 const NewUserForm = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values, { resetForm }) => {
-    console.log(values);
+  const handleFormSubmit = async (formData, { resetForm }) => {
+    try {
+      const response = await fetch("http://localhost:8000/v1/users/new", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Handle successful response
+        console.log("Data sent successfully");
+
+        // TODO: Tell user datagrid to update via a context
+      } else {
+        // Handle error response
+        console.error("Error sending data");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
     resetForm();
   };
 
@@ -95,11 +111,7 @@ const NewUserForm = () => {
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
-            <Box
-              display="flex"
-              justifyContent="end"
-              mt="20px"
-            >
+            <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
                 SUBMIT
               </Button>
@@ -114,7 +126,9 @@ const NewUserForm = () => {
 const checkoutSchema = yup.object().shape({
   username: yup.string().required("required"),
   password: yup.string().required("required"),
-  confirmPassword: yup.string().required("required"),
+  confirmPassword: yup.string()
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("required"),
   email: yup.string().email("invalid email").required("required"),
 });
 
@@ -122,7 +136,6 @@ const initialValues = {
   username: "",
   email: "",
   password: "",
-  confirmPassword: "",
 };
 
 export default NewUserForm;
