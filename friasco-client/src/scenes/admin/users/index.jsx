@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, IconButton, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Header from "../../../components/Header";
 import CustomHideShowFormGridToolbar from "../../../components/CustomHideShowFormGridToolbar";
 import AddIcon from "@mui/icons-material/Add";
 import NewUserForm from "../../../components/NewUserForm";
-import { fetchUsers } from "../../../data/api";
+import { fetchUsers, deleteUser } from "../../../data/api";
 
 const Users = () => {
   const theme = useTheme();
@@ -29,8 +31,24 @@ const Users = () => {
     fetchData();
   }, []);
 
-  const updateUserGrid = (updatedUsers) => {
+  const updateUserGrid = async () => {
+    const updatedUsers = await fetchUsers();
     setUsers(updatedUsers);
+  };
+
+  const deleteUserRow = async (userId) => {
+    try {
+      const response = await deleteUser(userId);
+      if (!response.ok) {
+        const message = `An error has occurred: ${response.status}`;
+        alert(message);
+        throw new Error(message);
+      } else {
+        await updateUserGrid();
+      }
+    } catch (error) {
+      console.error("Error: ", error);
+    }
   };
 
   const columns = [
@@ -74,6 +92,30 @@ const Users = () => {
         );
       },
     },
+    {
+      field: "",
+      headerName: "Actions",
+      renderCell: (params) => (
+        <>
+          <IconButton
+            onClick={() => alert(`Editing row ${params.id}`)}
+            style={{
+              color: colors.grey[100],
+            }}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            onClick={() => deleteUserRow(params.id)}
+            style={{
+              color: colors.redAccent[300],
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </>
+      ),
+    },
   ];
 
   return (
@@ -112,7 +154,6 @@ const Users = () => {
         }}
       >
         <DataGrid
-          checkboxSelection
           rows={users}
           columns={columns}
           slots={{

@@ -38,3 +38,18 @@ export async function createUser(formData) {
 
   return response;
 }
+
+export async function deleteUser(userId) {
+  const response = await fetch(`http://localhost:8000/v1/users/${userId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return response;
+}
+
+export async function updateUser(formData) {
+  // TODO
+}

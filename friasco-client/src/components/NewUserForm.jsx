@@ -2,9 +2,8 @@ import { Box, Button, TextField, useTheme } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { fetchUsers, createUser } from "../data/api";
+import { createUser } from "../data/api";
 
-// TODO: Refactor the form so that a single form can be used for Update AND Create
 const NewUserForm = ({ updateUserGrid }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
@@ -14,8 +13,7 @@ const NewUserForm = ({ updateUserGrid }) => {
 
       if (response.ok) {
         // Handle successful response
-        const updatedUsers = await fetchUsers();
-        updateUserGrid(updatedUsers);
+        await updateUserGrid();
       } else {
         // Handle error response
         console.error("Error sending data");
@@ -121,7 +119,8 @@ const NewUserForm = ({ updateUserGrid }) => {
 const checkoutSchema = yup.object().shape({
   username: yup.string().required("required"),
   password: yup.string().required("required"),
-  confirmPassword: yup.string()
+  confirmPassword: yup
+    .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("required"),
   email: yup.string().email("invalid email").required("required"),
