@@ -29,6 +29,10 @@ const Users = () => {
     fetchData();
   }, []);
 
+  const updateUserGrid = (updatedUsers) => {
+    setUsers(updatedUsers);
+  };
+
   const columns = [
     { field: "id", headerName: "ID" },
     {
@@ -116,7 +120,7 @@ const Users = () => {
               <CustomHideShowFormGridToolbar
                 buttonName="CREATE"
                 buttonIcon={<AddIcon />}
-                formToShow={<NewUserForm />}
+                formToShow={<NewUserForm updateUserGrid={updateUserGrid} />}
               />
             ),
           }}

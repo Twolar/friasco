@@ -2,25 +2,20 @@ import { Box, Button, TextField, useTheme } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { fetchUsers, createUser } from "../data/api";
 
-const NewUserForm = () => {
+// TODO: Refactor the form so that a single form can be used for Update AND Create
+const NewUserForm = ({ updateUserGrid }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = async (formData, { resetForm }) => {
     try {
-      const response = await fetch("http://localhost:8000/v1/users/new", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await createUser(formData);
 
       if (response.ok) {
         // Handle successful response
-        console.log("Data sent successfully");
-
-        // TODO: Tell user datagrid to update via a context
+        const updatedUsers = await fetchUsers();
+        updateUserGrid(updatedUsers);
       } else {
         // Handle error response
         console.error("Error sending data");

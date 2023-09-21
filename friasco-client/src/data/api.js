@@ -26,3 +26,15 @@ export async function fetchUsers() {
     return []; // Return an empty array or handle the error as needed
   }
 }
+
+export async function createUser(formData) {
+  const response = await fetch("http://localhost:8000/v1/users/new", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+
+  return response;
+}
