@@ -8,21 +8,13 @@ const NewUserForm = ({ updateUserGrid }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = async (formData, { resetForm }) => {
-    try {
-      const response = await createUser(formData);
+    const userCreatedSuccess = await createUser(formData);
 
-      if (response.ok) {
-        // Handle successful response
-        await updateUserGrid();
-      } else {
-        // Handle error response
-        console.error("Error sending data");
-      }
-    } catch (error) {
-      console.error("Error:", error);
+    if (userCreatedSuccess) {
+      // Handle successful response
+      await updateUserGrid();
+      resetForm();
     }
-
-    resetForm();
   };
 
   return (

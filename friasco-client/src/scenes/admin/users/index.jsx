@@ -18,36 +18,28 @@ const Users = () => {
 
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const initialUsers = await fetchUsers();
-        setUsers(initialUsers);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    }
-
-    fetchData();
-  }, []);
-
   const updateUserGrid = async () => {
-    const updatedUsers = await fetchUsers();
-    setUsers(updatedUsers);
+    const fetchedUsers = await fetchUsers();
+
+    fetchedUsers.forEach((user, index) => {
+      if (index === 0) {
+        user.access = "admin";
+      } else {
+        user.access = "user";
+      }
+    });
+
+    setUsers(fetchedUsers);
   };
 
+  useEffect(() => {
+    updateUserGrid();
+  }, []);
+
   const deleteUserRow = async (userId) => {
-    try {
-      const response = await deleteUser(userId);
-      if (!response.ok) {
-        const message = `An error has occurred: ${response.status}`;
-        alert(message);
-        throw new Error(message);
-      } else {
-        await updateUserGrid();
-      }
-    } catch (error) {
-      console.error("Error: ", error);
+    const userDeletedSuccess = await deleteUser(userId);
+    if (userDeletedSuccess) {
+      updateUserGrid();
     }
   };
 
