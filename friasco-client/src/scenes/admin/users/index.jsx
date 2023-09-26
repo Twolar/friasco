@@ -90,14 +90,6 @@ const Users = () => {
       renderCell: (params) => (
         <>
           <IconButton
-            onClick={() => alert(`Editing row ${params.id}`)}
-            style={{
-              color: colors.grey[100],
-            }}
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton
             onClick={() => deleteUserRow(params.id)}
             style={{
               color: colors.redAccent[300],

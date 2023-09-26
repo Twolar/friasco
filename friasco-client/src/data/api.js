@@ -65,7 +65,3 @@ export async function deleteUser(userId) {
     alert(error);
   }
 }
-
-export async function updateUser(formData) {
-  // TODO
-}
