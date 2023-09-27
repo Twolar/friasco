@@ -21,6 +21,7 @@ const Users = () => {
   const updateUserGrid = async () => {
     const fetchedUsers = await fetchUsers();
 
+    // TODO: Implement proper user role functionality.
     fetchedUsers.forEach((user, index) => {
       if (index === 0) {
         user.access = "admin";
