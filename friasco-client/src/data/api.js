@@ -65,3 +65,26 @@ export async function deleteUser(userId) {
     alert(error);
   }
 }
+
+export async function fetchTrips() {
+  try {
+    const response = await fetch("http://localhost:8000/v1/trips/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.trips;
+    } else {
+      console.error("Error fetching data");
+      return []; // Return an empty array or handle the error as needed
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert(error);
+    return []; // Return an empty array or handle the error as needed
+  }
+}

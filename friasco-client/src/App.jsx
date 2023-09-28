@@ -5,6 +5,7 @@ import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar'
 import Dashboard from './scenes/dashboard';
 import Users from './scenes/admin/users';
+import Trips from './scenes/trips';
 // import Geography from './scenes/geography';
 // import Calendar from './scenes/calendar';
 
@@ -22,6 +23,7 @@ function App() {
             <Routes>
               <Route path ="/" element={<Dashboard />} />
               <Route path ="/users" element={<Users />} />
+              <Route path ="/trips" element={<Trips />} />
               {/* <Route path ="/geography" element={<Geography />} /> */}
               {/* <Route path ="/calendar" element={<Calendar />} /> */}
             </Routes>

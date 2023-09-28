@@ -11,6 +11,7 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import FlightOutlinedIcon from '@mui/icons-material/FlightOutlined';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -134,6 +135,13 @@ const Sidebar = () => {
             >
               Trips
             </Typography>
+            <Item
+              title="All"
+              to="/trips"
+              icon={<FlightOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Item
               title="Calendar"
               to="/calendar"
