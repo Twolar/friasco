@@ -88,3 +88,26 @@ export async function fetchTrips() {
     return []; // Return an empty array or handle the error as needed
   }
 }
+
+export async function createTrip(formData) {
+  try {
+    const response = await fetch("http://localhost:8000/v1/trips/new", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      const message = `An error has occurred: ${response.status}`;
+      alert(message);
+      throw new Error(message);
+    } else {
+      return response.ok;
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert(error);
+  }
+}

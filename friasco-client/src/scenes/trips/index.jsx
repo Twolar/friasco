@@ -4,8 +4,11 @@ import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
 import { fetchTrips } from "../../data/api";
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import CustomHideShowFormGridToolbar from "../../components/CustomHideShowFormGridToolbar";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import NewTripForm from "../../components/NewTripForm";
 
 const Trips = () => {
   const theme = useTheme();
@@ -91,7 +94,20 @@ const Trips = () => {
           },
         }}
       >
-        <DataGrid rows={trips} columns={columns} editMode="row" />
+        <DataGrid
+          rows={trips}
+          columns={columns}
+          editMode="row"
+          slots={{
+            toolbar: () => (
+              <CustomHideShowFormGridToolbar
+                buttonName="CREATE"
+                buttonIcon={<AddIcon />}
+                formToShow={<NewTripForm updateTripGrid={updateTripGrid} />}
+              />
+            ),
+          }}
+        />
       </Box>
     </Box>
   );
