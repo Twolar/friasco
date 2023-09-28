@@ -1,10 +1,14 @@
 import { Box, Button, TextField, useTheme } from "@mui/material";
+import { tokens } from "../theme";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createUser } from "../data/api";
 
 const NewUserForm = ({ updateUserGrid }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = async (formData, { resetForm }) => {
@@ -97,7 +101,14 @@ const NewUserForm = ({ updateUserGrid }) => {
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
+              <Button
+                type="submit"
+                variant="contained"
+                style={{
+                  color: colors.grey[100],
+                  backgroundColor: colors.greenAccent[600],
+                }}
+              >
                 SUBMIT
               </Button>
             </Box>
