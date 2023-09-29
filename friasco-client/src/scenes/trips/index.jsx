@@ -1,34 +1,78 @@
 import { useState, useEffect } from "react";
-import { Box, IconButton, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Box, useTheme } from "@mui/material";
+import {
+  GridRowModes,
+  DataGrid,
+  GridActionsCellItem,
+  GridRowEditStopReasons,
+} from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
 import { fetchTrips, deleteTrip } from "../../data/api";
 import CustomHideShowFormGridToolbar from "../../components/CustomHideShowFormGridToolbar";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Close';
 import NewTripForm from "../../components/NewTripForm";
 
 const Trips = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [trips, setTrips] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [rowModesModel, setRowModesModel] = useState({});
 
   const updateTripGrid = async () => {
     const fetchedTrips = await fetchTrips();
-    setTrips(fetchedTrips);
+    setRows(fetchedTrips);
   };
 
   useEffect(() => {
     updateTripGrid();
   }, []);
 
-  const deleteTripRow = async (tripId) => {
-    const tripDeletedSuccess = await deleteTrip(tripId);
+  const handleRowEditStop = (params, event) => {
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+      event.defaultMuiPrevented = true;
+    }
+  };
+
+  const handleEditClick = (id) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+
+  const handleSaveClick = (id) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+  };
+
+  const handleDeleteClick = (id) => async () => {
+    const tripDeletedSuccess = await deleteTrip(id);
     if (tripDeletedSuccess) {
       updateTripGrid();
     }
+  };
+
+  const handleCancelClick = (id) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    });
+
+    const editedRow = rows.find((row) => row.id === id);
+    if (editedRow.isNew) {
+      setRows(rows.filter((row) => row.id !== id));
+    }
+  };
+
+  const processRowUpdate = (newRow) => {
+    const updatedRow = { ...newRow, isNew: false };
+    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    return updatedRow;
+  };
+
+  const handleRowModesModelChange = (newRowModesModel) => {
+    setRowModesModel(newRowModesModel);
   };
 
   const columns = [
@@ -40,28 +84,56 @@ const Trips = () => {
     { field: "status", headerName: "Status", editable: true },
     { field: "privacyStatus", headerName: "Privacy", editable: true },
     {
-      field: "",
+      field: "actions",
+      type: "actions",
       headerName: "Actions",
-      renderCell: (params) => (
-        <>
-          <IconButton
-            onClick={() => alert("Editing Row: " + params.id)}
+      width: 100,
+      cellClassName: "actions",
+      getActions: ({ id }) => {
+        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        if (isInEditMode) {
+          return [
+            <GridActionsCellItem
+              icon={<SaveIcon />}
+              label="Save"
+              style={{
+                color: colors.greenAccent[500],
+              }}
+              onClick={handleSaveClick(id)}
+            />,
+            <GridActionsCellItem
+              icon={<CancelIcon />}
+              label="Cancel"
+              className="textPrimary"
+              onClick={handleCancelClick(id)}
+              style={{
+                color: colors.redAccent[300],
+              }}
+            />,
+          ];
+        }
+
+        return [
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            label="Edit"
+            className="textPrimary"
+            onClick={handleEditClick(id)}
             style={{
-              color: colors.primary[100],
+              color: colors.grey[100],
             }}
-          >
-            <EditOutlinedIcon />
-          </IconButton>
-          <IconButton
-            onClick={() => deleteTripRow(params.id)}
+          />,
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
             style={{
               color: colors.redAccent[300],
             }}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </>
-      ),
+          />,
+        ];
+      },
     },
   ];
 
@@ -101,15 +173,22 @@ const Trips = () => {
         }}
       >
         <DataGrid
-          rows={trips}
+          rows={rows}
           columns={columns}
           editMode="row"
+          rowModesModel={rowModesModel}
+          onRowModesModelChange={handleRowModesModelChange}
+          onRowEditStop={handleRowEditStop}
+          processRowUpdate={processRowUpdate}
           slots={{
             toolbar: () => (
               <CustomHideShowFormGridToolbar
                 formToShow={<NewTripForm updateTripGrid={updateTripGrid} />}
               />
             ),
+          }}        
+          slotProps={{
+            toolbar: { setRows, setRowModesModel },
           }}
         />
       </Box>
