@@ -5,6 +5,9 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTrip } from "../data/api";
 
+// TODO: Style the date picker
+// TODO: Form validation
+
 const NewTripForm = ({ updateTripGrid }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -76,7 +79,7 @@ const NewTripForm = ({ updateTripGrid }) => {
               <TextField
                 fullWidth
                 variant="filled"
-                type="text"
+                type="date"
                 label="Start"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -89,7 +92,7 @@ const NewTripForm = ({ updateTripGrid }) => {
               <TextField
                 fullWidth
                 variant="filled"
-                type="text"
+                type="date"
                 label="End"
                 onBlur={handleBlur}
                 onChange={handleChange}

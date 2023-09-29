@@ -3,11 +3,10 @@ import { Box, Typography, IconButton, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
+import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Header from "../../../components/Header";
 import CustomHideShowFormGridToolbar from "../../../components/CustomHideShowFormGridToolbar";
-import AddIcon from "@mui/icons-material/Add";
 import NewUserForm from "../../../components/NewUserForm";
 import { fetchUsers, deleteUser } from "../../../data/api";
 
@@ -143,8 +142,6 @@ const Users = () => {
           slots={{
             toolbar: () => (
               <CustomHideShowFormGridToolbar
-                buttonName="CREATE"
-                buttonIcon={<AddIcon />}
                 formToShow={<NewUserForm updateUserGrid={updateUserGrid} />}
               />
             ),

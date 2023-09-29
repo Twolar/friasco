@@ -7,7 +7,6 @@ import { fetchTrips } from "../../data/api";
 import CustomHideShowFormGridToolbar from "../../components/CustomHideShowFormGridToolbar";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
 import NewTripForm from "../../components/NewTripForm";
 
 const Trips = () => {
@@ -101,8 +100,6 @@ const Trips = () => {
           slots={{
             toolbar: () => (
               <CustomHideShowFormGridToolbar
-                buttonName="CREATE"
-                buttonIcon={<AddIcon />}
                 formToShow={<NewTripForm updateTripGrid={updateTripGrid} />}
               />
             ),
