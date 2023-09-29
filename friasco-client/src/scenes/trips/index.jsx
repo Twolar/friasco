@@ -16,6 +16,10 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import NewTripForm from "../../components/NewTripForm";
 
+// TODO: Hook up handle actions
+// TODO: Decide on CREATE functionality + validation, i.e. single point of validation on serverside?
+// TODO: Optimization, how should the API be called for each update action?
+
 const Trips = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -105,7 +109,6 @@ const Trips = () => {
             <GridActionsCellItem
               icon={<CancelIcon />}
               label="Cancel"
-              className="textPrimary"
               onClick={handleCancelClick(id)}
               style={{
                 color: colors.redAccent[300],
@@ -118,7 +121,6 @@ const Trips = () => {
           <GridActionsCellItem
             icon={<EditIcon />}
             label="Edit"
-            className="textPrimary"
             onClick={handleEditClick(id)}
             style={{
               color: colors.grey[100],
