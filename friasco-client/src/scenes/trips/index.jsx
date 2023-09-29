@@ -3,7 +3,7 @@ import { Box, IconButton, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
-import { fetchTrips } from "../../data/api";
+import { fetchTrips, deleteTrip } from "../../data/api";
 import CustomHideShowFormGridToolbar from "../../components/CustomHideShowFormGridToolbar";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -23,6 +23,13 @@ const Trips = () => {
   useEffect(() => {
     updateTripGrid();
   }, []);
+
+  const deleteTripRow = async (tripId) => {
+    const tripDeletedSuccess = await deleteTrip(tripId);
+    if (tripDeletedSuccess) {
+      updateTripGrid();
+    }
+  };
 
   const columns = [
     { field: "id", headerName: "ID" },
@@ -46,7 +53,7 @@ const Trips = () => {
             <EditOutlinedIcon />
           </IconButton>
           <IconButton
-            onClick={() => alert("Deleting Row: " + params.id)}
+            onClick={() => deleteTripRow(params.id)}
             style={{
               color: colors.redAccent[300],
             }}

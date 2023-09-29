@@ -111,3 +111,25 @@ export async function createTrip(formData) {
     alert(error);
   }
 }
+
+export async function deleteTrip(tripId) {
+  try {
+    const response = await fetch(`http://localhost:8000/v1/trips/${tripId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const message = `An error has occurred: ${response.status}`;
+      alert(message);
+      throw new Error(message);
+    } else {
+      return response.ok;
+    }
+  } catch (error) {
+    console.error("Error: ", error);
+    alert(error);
+  }
+}
