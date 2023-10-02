@@ -5,7 +5,7 @@ export const TripStatus = {
 }
 
 export const TripPrivacy = {
-  onlyme: "Only Me",
+  onlyMe: "Only Me",
   closeFriends: "Close Friends",
   friends: "Friends",
   everyone: "Everyone"
