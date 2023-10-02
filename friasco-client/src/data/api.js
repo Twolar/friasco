@@ -133,3 +133,29 @@ export async function deleteTrip(tripId) {
     alert(error);
   }
 }
+
+export async function updateTrip(updatedTripData) {
+  const tripId = updatedTripData.id;
+  const { id, ...tripData } = updatedTripData;
+
+  try {
+    const response = await fetch(`http://localhost:8000/v1/trips/${tripId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tripData),
+    });
+
+    if (!response.ok) {
+      const message = `An error has occurred: ${response.status}`;
+      alert(message);
+      throw new Error(message);
+    } else {
+      return response.ok;
+    }
+  } catch (error) {
+    console.error("Error: ", error);
+    alert(error);
+  }
+}

@@ -8,17 +8,14 @@ import {
 } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
-import { fetchTrips, deleteTrip } from "../../data/api";
+import { fetchTrips, deleteTrip, updateTrip } from "../../data/api";
 import CustomHideShowFormGridToolbar from "../../components/CustomHideShowFormGridToolbar";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Close";
 import NewTripForm from "../../components/NewTripForm";
-
-// TODO: Hook up handle actions
-// TODO: Decide on CREATE functionality + validation, i.e. single point of validation on serverside?
-// TODO: Optimization, how should the API be called for each update action?
+import { TripPrivacy, TripStatus } from "../../data/enums";
 
 const Trips = () => {
   const theme = useTheme();
@@ -69,10 +66,13 @@ const Trips = () => {
     }
   };
 
-  const processRowUpdate = (newRow) => {
+  const processRowUpdate = async (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    return updatedRow;
+    const tripUpdatedSuccess = await updateTrip(newRow);
+    if (tripUpdatedSuccess) {
+      setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+      return updatedRow;
+    }
   };
 
   const handleRowModesModelChange = (newRowModesModel) => {
@@ -83,15 +83,42 @@ const Trips = () => {
     { field: "id", headerName: "ID" },
     { field: "userId", headerName: "User ID", editable: true },
     { field: "location", headerName: "Location", editable: true },
-    { field: "startDate", headerName: "Start", editable: true },
-    { field: "endDate", headerName: "End", editable: true },
-    { field: "status", headerName: "Status", editable: true },
-    { field: "privacyStatus", headerName: "Privacy", editable: true },
+    {
+      field: "startDate",
+      headerName: "Start",
+      type: "date",
+      editable: true,
+      valueGetter: (params) => new Date(params.value),
+      cellClassName: "datePickerInput",
+    },
+    {
+      field: "endDate",
+      headerName: "End",
+      type: "date",
+      editable: true,
+      valueGetter: (params) => new Date(params.value),
+      cellClassName: "datePickerInput",
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      editable: true,
+      flex: 1,
+      type: "singleSelect",
+      valueOptions: Object.entries(TripStatus).map(([key, value]) => ({value: key, label: value}))
+    },
+    {
+      field: "privacyStatus",
+      headerName: "Privacy",
+      editable: true,
+      flex: 1,
+      type: "singleSelect",
+      valueOptions: Object.entries(TripPrivacy).map(([key, value]) => ({value: key, label: value})),
+    },
     {
       field: "actions",
       type: "actions",
       headerName: "Actions",
-      width: 100,
       cellClassName: "actions",
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
@@ -188,7 +215,7 @@ const Trips = () => {
                 formToShow={<NewTripForm updateTripGrid={updateTripGrid} />}
               />
             ),
-          }}        
+          }}
           slotProps={{
             toolbar: { setRows, setRowModesModel },
           }}
