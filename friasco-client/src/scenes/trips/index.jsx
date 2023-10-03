@@ -15,7 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import NewTripForm from "../../components/NewTripForm";
-import { TripPrivacy, TripStatus } from "../../data/enums";
+import { TripPrivacyEnum, TripStatusEnum } from "../../data/enums";
 
 const Trips = () => {
   const theme = useTheme();
@@ -105,7 +105,7 @@ const Trips = () => {
       editable: true,
       flex: 1,
       type: "singleSelect",
-      valueOptions: Object.entries(TripStatus).map(([key, value]) => ({value: key, label: value}))
+      valueOptions: Object.entries(TripStatusEnum).map(([key, value]) => ({value: key, label: value}))
     },
     {
       field: "privacyStatus",
@@ -113,7 +113,7 @@ const Trips = () => {
       editable: true,
       flex: 1,
       type: "singleSelect",
-      valueOptions: Object.entries(TripPrivacy).map(([key, value]) => ({value: key, label: value})),
+      valueOptions: Object.entries(TripPrivacyEnum).map(([key, value]) => ({value: key, label: value})),
     },
     {
       field: "actions",

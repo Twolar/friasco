@@ -14,7 +14,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTrip } from "../data/api";
-import { TripPrivacy, TripStatus } from "../data/enums";
+import { TripPrivacyEnum, TripStatusEnum } from "../data/enums";
 
 const NewTripForm = ({ updateTripGrid }) => {
   const theme = useTheme();
@@ -124,7 +124,7 @@ const NewTripForm = ({ updateTripGrid }) => {
                   value={values.status}
                   error={!!touched.status && !!errors.status}
                 >
-                  {Object.entries(TripStatus).map(([key, value]) => (
+                  {Object.entries(TripStatusEnum).map(([key, value]) => (
                     <MenuItem key={key} value={key}>
                       {value}
                     </MenuItem>
@@ -148,7 +148,7 @@ const NewTripForm = ({ updateTripGrid }) => {
                   value={values.privacyStatus}
                   error={!!touched.privacyStatus && !!errors.privacyStatus}
                 >
-                  {Object.entries(TripPrivacy).map(([key, value]) => (
+                  {Object.entries(TripPrivacyEnum).map(([key, value]) => (
                     <MenuItem key={key} value={key}>
                       {value}
                     </MenuItem>
