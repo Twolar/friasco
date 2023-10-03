@@ -145,15 +145,26 @@ const NewTripForm = ({ updateTripGrid }) => {
   );
 };
 
-const checkoutSchema = yup.object().shape({});
+const checkoutSchema = yup.object().shape({
+  userId: yup.number().required("required"),
+  location: yup.string().required("required"),
+  startDate: yup.date().required('required'),
+  endDate: yup.date()
+    .required('required')
+    .when('startDate', (startDate, schema) => {
+      return startDate && schema.min(startDate, 'End date must be later than start date');
+    }),
+  status: yup.string().required("required"),
+  privacyStatus: yup.string().required("required"),
+});
 
 const initialValues = {
   userId: 1,
-  location: "Auckland",
-  startDate: "2023-07-03",
-  endDate: "2023-07-25",
-  status: "planning",
-  privacyStatus: "closefriends",
+  location: "",
+  startDate: new Date().toISOString().substring(0, 10),
+  endDate: new Date().toISOString().substring(0, 10),
+  status: "",
+  privacyStatus: "",
 };
 
 export default NewTripForm;
