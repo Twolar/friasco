@@ -1,9 +1,20 @@
-import { Box, Button, TextField, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  FormHelperText,
+  useTheme,
+} from "@mui/material";
 import { tokens } from "../theme";
-import { Formik } from "formik";
+import { Formik, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTrip } from "../data/api";
+import { TripPrivacy, TripStatus } from "../data/enums";
 
 const NewTripForm = ({ updateTripGrid }) => {
   const theme = useTheme();
@@ -99,32 +110,54 @@ const NewTripForm = ({ updateTripGrid }) => {
                 helperText={touched.endDate && errors.endDate}
                 sx={{ gridColumn: "span 2" }}
               />
-              <TextField
+              <FormControl
                 fullWidth
                 variant="filled"
-                type="text"
-                label="Status"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.status}
-                name="status"
-                error={!!touched.status && !!errors.status}
-                helperText={touched.status && errors.status}
                 sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
+              >
+                <InputLabel>Status</InputLabel>
+                <Field
+                  as={Select}
+                  name="status"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.status}
+                  error={!!touched.status && !!errors.status}
+                >
+                  {Object.entries(TripStatus).map(([key, value]) => (
+                    <MenuItem key={key} value={key}>
+                      {value}
+                    </MenuItem>
+                  ))}
+                </Field>
+                {!!touched.status && !!errors.status && (
+                  <FormHelperText error>{errors.status}</FormHelperText>
+                )}
+              </FormControl>
+              <FormControl
                 fullWidth
                 variant="filled"
-                type="text"
-                label="Privacy"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.privacyStatus}
-                name="privacyStatus"
-                error={!!touched.privacyStatus && !!errors.privacyStatus}
-                helperText={touched.privacyStatus && errors.privacyStatus}
                 sx={{ gridColumn: "span 2" }}
-              />
+              >
+                <InputLabel>Privacy</InputLabel>
+                <Field
+                  as={Select}
+                  name="privacyStatus"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.privacyStatus}
+                  error={!!touched.privacyStatus && !!errors.privacyStatus}
+                >
+                  {Object.entries(TripPrivacy).map(([key, value]) => (
+                    <MenuItem key={key} value={key}>
+                      {value}
+                    </MenuItem>
+                  ))}
+                </Field>
+                {!!touched.status && !!errors.status && (
+                  <FormHelperText error>{errors.status}</FormHelperText>
+                )}
+              </FormControl>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button
@@ -148,11 +181,15 @@ const NewTripForm = ({ updateTripGrid }) => {
 const checkoutSchema = yup.object().shape({
   userId: yup.number().required("required"),
   location: yup.string().required("required"),
-  startDate: yup.date().required('required'),
-  endDate: yup.date()
-    .required('required')
-    .when('startDate', (startDate, schema) => {
-      return startDate && schema.min(startDate, 'End date must be later than start date');
+  startDate: yup.date().required("required"),
+  endDate: yup
+    .date()
+    .required("required")
+    .when("startDate", (startDate, schema) => {
+      return (
+        startDate &&
+        schema.min(startDate, "End date must be later than start date")
+      );
     }),
   status: yup.string().required("required"),
   privacyStatus: yup.string().required("required"),
