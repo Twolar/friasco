@@ -167,7 +167,7 @@ const Trips = () => {
   ];
 
   return (
-    <Box m="0px 20px">
+    <Box m="0px 20px 20px 20px">
       <Header title="TRIPS" subtitle="Manage your trips" />
 
       <Box

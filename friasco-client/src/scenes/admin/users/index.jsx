@@ -102,7 +102,7 @@ const Users = () => {
   ];
 
   return (
-    <Box m="0px 20px">
+    <Box m="0px 20px 20px 20px">
       <Header title="USERS" subtitle="Manage all users" />
 
       <Box
