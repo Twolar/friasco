@@ -11,10 +11,10 @@ import {
 } from "@mui/material";
 import { tokens } from "../theme";
 import { Formik, Field, ErrorMessage } from "formik";
-import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTrip } from "../data/api";
 import { TripPrivacyEnum, TripStatusEnum } from "../data/enums";
+import { TripValidationSchema } from "../data/validationSchemas";
 
 const NewTripForm = ({ updateTripGrid }) => {
   const theme = useTheme();
@@ -37,7 +37,7 @@ const NewTripForm = ({ updateTripGrid }) => {
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        validationSchema={TripValidationSchema}
       >
         {({
           values,
@@ -177,23 +177,6 @@ const NewTripForm = ({ updateTripGrid }) => {
     </>
   );
 };
-
-const checkoutSchema = yup.object().shape({
-  userId: yup.number().required("required"),
-  location: yup.string().required("required"),
-  startDate: yup.date().required("required"),
-  endDate: yup
-    .date()
-    .required("required")
-    .when("startDate", (startDate, schema) => {
-      return (
-        startDate &&
-        schema.min(startDate, "End date must be later than start date")
-      );
-    }),
-  status: yup.string().required("required"),
-  privacyStatus: yup.string().required("required"),
-});
 
 const initialValues = {
   userId: 1,

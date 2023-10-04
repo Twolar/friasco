@@ -1,9 +1,9 @@
 import { Box, Button, TextField, useTheme } from "@mui/material";
 import { tokens } from "../theme";
 import { Formik } from "formik";
-import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createUser } from "../data/api";
+import { NewUserValidationSchema } from "../data/validationSchemas";
 
 const NewUserForm = ({ updateUserGrid }) => {
   const theme = useTheme();
@@ -26,7 +26,7 @@ const NewUserForm = ({ updateUserGrid }) => {
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        validationSchema={NewUserValidationSchema}
       >
         {({
           values,
@@ -118,16 +118,6 @@ const NewUserForm = ({ updateUserGrid }) => {
     </>
   );
 };
-
-const checkoutSchema = yup.object().shape({
-  username: yup.string().required("required"),
-  password: yup.string().required("required"),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required("required"),
-  email: yup.string().email("invalid email").required("required"),
-});
 
 const initialValues = {
   username: "",
