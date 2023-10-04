@@ -99,7 +99,7 @@ const Trips = () => {
         return {
           ...params.props,
           error: true,
-          errorMessage: error.message, // ADD SOME SORT OF ERROR MESSAGE HANDLING
+          // errorMessage: error.message, // ADD SOME SORT OF ERROR MESSAGE HANDLING
         };
       }
     }
