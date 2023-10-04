@@ -16,6 +16,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import NewTripForm from "../../components/NewTripForm";
 import { TripPrivacyEnum, TripStatusEnum } from "../../data/enums";
+import { TripValidationSchema } from "../../data/validationSchemas";
 
 const Trips = () => {
   const theme = useTheme();
@@ -79,9 +80,41 @@ const Trips = () => {
     setRowModesModel(newRowModesModel);
   };
 
+  const validateField = (params) => {
+    const {
+      hasChanged,
+      props: { value },
+    } = params;
+    if (hasChanged) {
+      console.log("Value Changed");
+      try {
+        TripValidationSchema.validateSyncAt("userId", { userId: value });
+        console.log("SUCCESS");
+        return {
+          ...params.props,
+          error: false,
+        };
+      } catch (error) {
+        console.log("ERROR");
+        return {
+          ...params.props,
+          error: true,
+          errorMessage: error.message, // ADD SOME SORT OF ERROR MESSAGE HANDLING
+        };
+      }
+    }
+    console.log("Return params.props");
+    return params.props;
+  };
+
   const columns = [
     { field: "id", headerName: "ID" },
-    { field: "userId", headerName: "User ID", editable: true },
+    {
+      field: "userId",
+      headerName: "User ID",
+      editable: true,
+      preProcessEditCellProps: validateField,
+    },
     { field: "location", headerName: "Location", editable: true },
     {
       field: "startDate",
@@ -105,7 +138,10 @@ const Trips = () => {
       editable: true,
       flex: 1,
       type: "singleSelect",
-      valueOptions: Object.entries(TripStatusEnum).map(([key, value]) => ({value: key, label: value}))
+      valueOptions: Object.entries(TripStatusEnum).map(([key, value]) => ({
+        value: key,
+        label: value,
+      })),
     },
     {
       field: "privacyStatus",
@@ -113,7 +149,10 @@ const Trips = () => {
       editable: true,
       flex: 1,
       type: "singleSelect",
-      valueOptions: Object.entries(TripPrivacyEnum).map(([key, value]) => ({value: key, label: value})),
+      valueOptions: Object.entries(TripPrivacyEnum).map(([key, value]) => ({
+        value: key,
+        label: value,
+      })),
     },
     {
       field: "actions",
