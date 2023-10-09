@@ -16,7 +16,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import NewTripForm from "../../components/NewTripForm";
 import { TripPrivacyEnum, TripStatusEnum } from "../../data/enums";
-import { TripValidationSchema } from "../../data/validationSchemas";
+import { EditTripValidationSchema } from "../../data/validationSchemas";
 
 const Trips = () => {
   const theme = useTheme();
@@ -80,32 +80,37 @@ const Trips = () => {
     setRowModesModel(newRowModesModel);
   };
 
-  const validateField = (params) => {
-    const {
-      hasChanged,
-      props: { value },
-    } = params;
+  const validateField = async (fieldName, params) => {
+    const { hasChanged, props: cellProps, otherFieldsProps } = params;
     if (hasChanged) {
       console.log("Value Changed");
+      const rowData = {
+        ...Object.fromEntries(
+          Object.entries(otherFieldsProps).map(([key, value]) => [key, value.value])
+        ),
+        [fieldName]: cellProps.value,
+      };
+      console.log(rowData);
       try {
-        TripValidationSchema.validateSyncAt("userId", { userId: value });
+        await EditTripValidationSchema.validateSync(rowData);
         console.log("SUCCESS");
         return {
-          ...params.props,
+          ...cellProps,
           error: false,
         };
       } catch (error) {
+        console.log(error);
         console.log("ERROR");
         return {
-          ...params.props,
+          ...cellProps,
           error: true,
           // errorMessage: error.message, // ADD SOME SORT OF ERROR MESSAGE HANDLING
         };
       }
     }
     console.log("Return params.props");
-    return params.props;
-  };
+    return cellProps;
+  };  
 
   const columns = [
     { field: "id", headerName: "ID" },
@@ -113,9 +118,14 @@ const Trips = () => {
       field: "userId",
       headerName: "User ID",
       editable: true,
-      preProcessEditCellProps: validateField,
+      preProcessEditCellProps: (params) => validateField("userId", params),
     },
-    { field: "location", headerName: "Location", editable: true },
+    {
+      field: "location",
+      headerName: "Location",
+      editable: true,
+      preProcessEditCellProps: (params) => validateField("location", params),
+    },
     {
       field: "startDate",
       headerName: "Start",
@@ -123,6 +133,7 @@ const Trips = () => {
       editable: true,
       valueGetter: (params) => new Date(params.value),
       cellClassName: "datePickerInput",
+      preProcessEditCellProps: (params) => validateField("startDate", params),
     },
     {
       field: "endDate",
@@ -131,6 +142,7 @@ const Trips = () => {
       editable: true,
       valueGetter: (params) => new Date(params.value),
       cellClassName: "datePickerInput",
+      preProcessEditCellProps: (params) => validateField("endDate", params),
     },
     {
       field: "status",
@@ -142,6 +154,7 @@ const Trips = () => {
         value: key,
         label: value,
       })),
+      preProcessEditCellProps: (params) => validateField("status", params),
     },
     {
       field: "privacyStatus",
@@ -153,6 +166,8 @@ const Trips = () => {
         value: key,
         label: value,
       })),
+      preProcessEditCellProps: (params) =>
+        validateField("privacyStatus", params),
     },
     {
       field: "actions",

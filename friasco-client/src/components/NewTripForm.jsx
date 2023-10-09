@@ -14,7 +14,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTrip } from "../data/api";
 import { TripPrivacyEnum, TripStatusEnum } from "../data/enums";
-import { TripValidationSchema } from "../data/validationSchemas";
+import { NewTripValidationSchema } from "../data/validationSchemas";
 
 const NewTripForm = ({ updateTripGrid }) => {
   const theme = useTheme();
@@ -37,7 +37,7 @@ const NewTripForm = ({ updateTripGrid }) => {
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        validationSchema={TripValidationSchema}
+        validationSchema={NewTripValidationSchema}
       >
         {({
           values,
