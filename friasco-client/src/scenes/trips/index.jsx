@@ -83,24 +83,19 @@ const Trips = () => {
   const validateField = async (fieldName, params) => {
     const { hasChanged, props: cellProps, otherFieldsProps } = params;
     if (hasChanged) {
-      console.log("Value Changed");
       const rowData = {
         ...Object.fromEntries(
           Object.entries(otherFieldsProps).map(([key, value]) => [key, value.value])
         ),
         [fieldName]: cellProps.value,
       };
-      console.log(rowData);
       try {
         await EditTripValidationSchema.validateSync(rowData);
-        console.log("SUCCESS");
         return {
           ...cellProps,
           error: false,
         };
       } catch (error) {
-        console.log(error);
-        console.log("ERROR");
         return {
           ...cellProps,
           error: true,
@@ -108,7 +103,6 @@ const Trips = () => {
         };
       }
     }
-    console.log("Return params.props");
     return cellProps;
   };  
 
