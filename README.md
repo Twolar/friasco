@@ -10,9 +10,7 @@
 
 
 <!-- PROJECT LOGO -->
-# FRIASCO
-
-Learning project for Javascript related technologies 
+# FRIASCO REACT APP
 
 ---
 
@@ -35,9 +33,6 @@ Learning project for Javascript related technologies
 ---
 
 ### Built With
-
-- NodeJS
-- ExpressJS
 - ReactJS
 - Vite
 
@@ -55,19 +50,6 @@ NPM installed and setup
 
 ### Get Started Instructions
 
-Lint code before merging PRs:
-- To action linter changes, execute 'npm run lint-fix'
-
-Run Both:
-1. Exceute "npm install" in all directories (Root, API & Client)
-2. Execute "npm run dev" in root directory
-
-API Only:
-1. In terminal navigate to friasco-api directory
-2. Install packages with "npm install"
-3. To run the application "npm start" _(API is now served on http://localhost:8000/ or port defined in dotenv, and terminate it via 'control + c')_
-4. To run tests "npm test" (can be buggy with a couple of tests, executing a "npm run test-info" normally solves it)
-
 Client Only:
 1. In terminal navigate to friasco-client directory
 2. Install packages with "npm install"
@@ -75,21 +57,10 @@ Client Only:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-<!-- DOCUMENTATION -->
-## Documentation
-- API: After starting API, you can access swagger via /v1/swagger
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 <!-- CONTACT -->
 ## Contact
 
 Taylor Bennett
 - [LinkedIn](https://www.linkedin.com/in/t4ybennett)
-
-Filip Popovich
-- [LinkedIn](https://nz.linkedin.com/in/filip-popovich-428194150)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
