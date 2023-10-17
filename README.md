@@ -50,8 +50,7 @@ NPM installed and setup
 ### Get Started Instructions
 
 Client Only:
-1. In terminal navigate to friasco-client directory
-2. Install packages with "npm install"
+1. Install packages with "npm install"
 3. To run the client "npm run dev" _(Client is now served on http://localhost:8001/, and terminate it via 'control + c')_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
