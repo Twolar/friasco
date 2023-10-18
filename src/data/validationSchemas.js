@@ -1,13 +1,16 @@
 import * as yup from "yup";
 
 export const NewUserValidationSchema = yup.object().shape({
+  role: yup.string().required("required"),
+  firstName: yup.string().required("required"),
+  lastName: yup.string().required("required"),
   username: yup.string().required("required"),
+  email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("required"),
-  email: yup.string().email("invalid email").required("required"),
 });
 
 export const NewTripValidationSchema = yup.object().shape({

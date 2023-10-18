@@ -47,7 +47,7 @@ export async function createUser(formData) {
 
 export async function deleteUser(userId) {
   try {
-    const response = await fetch(`http://localhost:8000/v1/users/${userId}`, {
+    const response = await fetch(`https://localhost:8000/Users/${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
