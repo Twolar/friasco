@@ -22,9 +22,9 @@ const Users = () => {
     // TODO: Implement proper user role functionality.
     fetchedUsers.forEach((user, index) => {
       if (index === 0) {
-        user.access = "admin";
+        user.Role = "Admin";
       } else {
-        user.access = "user";
+        user.Role = "User";
       }
     });
 
@@ -56,10 +56,22 @@ const Users = () => {
       flex: 1,
     },
     {
-      field: "accessLevel",
-      headerName: "Access Level",
+      field: "firstName",
+      headerName: "First Name",
       flex: 1,
-      renderCell: ({ row: { access } }) => {
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "lastName",
+      headerName: "Last Name",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "role",
+      headerName: "Role",
+      flex: 1,
+      renderCell: ({ row: { role } }) => {
         return (
           <Box
             width="60%"
@@ -68,16 +80,16 @@ const Users = () => {
             display="flex"
             justifyContent="center"
             backgroundColor={
-              access === "admin"
+              role === "Admin"
                 ? colors.greenAccent[600]
                 : colors.greenAccent[700]
             }
             borderRadius="4px"
           >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "user" && <VerifiedUserOutlinedIcon />}
+            {role === "Admin" && <AdminPanelSettingsOutlinedIcon />}
+            {role === "User" && <VerifiedUserOutlinedIcon />}
             <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
+              {role}
             </Typography>
           </Box>
         );

@@ -51,6 +51,45 @@ const NewUserForm = ({ updateUserGrid }) => {
                 fullWidth
                 variant="filled"
                 type="text"
+                label="Role"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.role}
+                name="role"
+                error={!!touched.role && !!errors.role}
+                helperText={touched.role && errors.role}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="First Name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.firstName}
+                name="firstName"
+                error={!!touched.firstName && !!errors.firstName}
+                helperText={touched.firstName && errors.firstName}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Last Name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.lastName}
+                name="lastName"
+                error={!!touched.lastName && !!errors.lastName}
+                helperText={touched.lastName && errors.lastName}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
                 label="Username"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -58,6 +97,19 @@ const NewUserForm = ({ updateUserGrid }) => {
                 name="username"
                 error={!!touched.username && !!errors.username}
                 helperText={touched.username && errors.username}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Email"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email}
+                name="email"
+                error={!!touched.email && !!errors.email}
+                helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -86,19 +138,6 @@ const NewUserForm = ({ updateUserGrid }) => {
                 helperText={touched.confirmPassword && errors.confirmPassword}
                 sx={{ gridColumn: "span 2" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
-              />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button
@@ -120,9 +159,14 @@ const NewUserForm = ({ updateUserGrid }) => {
 };
 
 const initialValues = {
-  username: "",
-  email: "",
-  password: "",
+  role: "User",
+  firstName: "Baylor",
+  lastName: "Tennett",
+  username: "BaylorTennett",
+  email: "BaylorTennett@example.com",
+  password: "JKkandnjka^@#*bd",
+  confirmPassword: "JKkandnjka^@#*bd"
+
 };
 
 export default NewUserForm;

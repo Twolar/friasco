@@ -1,6 +1,6 @@
 export async function fetchUsers() {
   try {
-    const response = await fetch("http://localhost:8000/v1/users/", {
+    const response = await fetch("https://localhost:8000/Users", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -9,7 +9,7 @@ export async function fetchUsers() {
 
     if (response.ok) {
       const data = await response.json();
-      return data.users;
+      return data;
     } else {
       console.error("Error fetching data");
       return []; // Return an empty array or handle the error as needed
@@ -23,7 +23,8 @@ export async function fetchUsers() {
 
 export async function createUser(formData) {
   try {
-    const response = await fetch("http://localhost:8000/v1/users/new", {
+    console.log(formData)
+    const response = await fetch("https://localhost:8000/Users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
