@@ -50,7 +50,7 @@ NPM installed and setup
 ### Get Started Instructions
 
 1. Install packages with "npm install"
-3. To run the client "npm run dev" _(Client is now served on http://localhost:8001/, and terminate it via 'control + c')_
+2. To run the client "npm run dev" _(Client is now served on http://localhost:8001/, and terminate it via 'control + c')_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
