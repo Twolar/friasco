@@ -1,28 +1,41 @@
 {
-  "name": "friasco",
-  "version": "1.0.0",
-  "description": "<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 --> <a name=\"readme-top\"></a> <!-- *** Thanks for checking out the Best-README-Template. If you have a suggestion *** that would make this better, please fork the repo and create a pull request *** or simply open an issue with the tag \"enhancement\". *** Don't forget to give the project a star! *** Thanks again! Now go create something AMAZING! :D -->",
-  "main": "index.js",
+  "name": "friasco-client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "api": "npm start --prefix friasco-api",
-    "client": "npm run dev --prefix friasco-client",
-    "dev": "concurrently \"npm run api\" \"npm run client\"",
-
-    "api-test": "npm test --prefix friasco-api",
-    "api-test-info": "npm run test-info --prefix friasco-api",
-    "client-test": "",
-    "client-test-info": "",
-    "test": "npm run api-test; npm run client-test",
-    "test-info": "npm run api-test-info; npm run client-test-info",
-
-    "api-lint-fix": "npm run lint-fix --prefix friasco-api",
-    "client-lint": "npm run lint --prefix friasco-client",
-    "lint-fix": "npm run api-lint-fix; npm run client-lint"
+    "dev": "vite --port 8001",
+    "build": "vite build",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fullcalendar/core": "^6.1.8",
+    "@fullcalendar/daygrid": "^6.1.8",
+    "@fullcalendar/list": "^6.1.8",
+    "@fullcalendar/timegrid": "^6.1.8",
+    "@mui/icons-material": "^5.14.1",
+    "@mui/material": "^5.14.1",
+    "@mui/x-data-grid": "^6.10.1",
+    "@nivo/core": "^0.83.0",
+    "@nivo/geo": "^0.83.0",
+    "formik": "^2.4.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-pro-sidebar": "^0.7.1",
+    "react-router-dom": "^6.14.2",
+    "yup": "^1.2.0"
+  },
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "@vitejs/plugin-react": "^4.0.1",
+    "eslint": "^8.44.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.1",
+    "vite": "^4.4.0"
   }
 }
