@@ -49,7 +49,6 @@ NPM installed and setup
 
 ### Get Started Instructions
 
-Client Only:
 1. Install packages with "npm install"
 3. To run the client "npm run dev" _(Client is now served on http://localhost:8001/, and terminate it via 'control + c')_
 
