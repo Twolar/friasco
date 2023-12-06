@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
+import IconButton from "@mui/material/IconButton";
+import { tokens } from "../theme";
 import {
   GridToolbarContainer,
   GridToolbarColumnsButton,
@@ -8,7 +13,10 @@ import {
   GridToolbarExport,
 } from "@mui/x-data-grid";
 
-const CustomHideShowFormGridToolbar = ({buttonName, buttonIcon, formToShow}) => {
+const CustomHideShowFormGridToolbar = ({ formToShow }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [isFormVisible, setFormVisible] = useState(false);
 
   const toggleFormVisibility = () => {
@@ -17,14 +25,14 @@ const CustomHideShowFormGridToolbar = ({buttonName, buttonIcon, formToShow}) => 
 
   return (
     <GridToolbarContainer>
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={buttonIcon}
-        onClick={() => toggleFormVisibility()}
-      >
-        {isFormVisible ? "HIDE" : buttonName}
-      </Button>
+      <Tooltip title="Add New Item">
+        <IconButton
+          sx={{ background: "transparent", color: colors.grey[100] }}
+          onClick={() => toggleFormVisibility()}
+        >
+          {isFormVisible ? <RemoveOutlinedIcon /> : <AddIcon />}
+        </IconButton>
+      </Tooltip>
       <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
       <GridToolbarDensitySelector />

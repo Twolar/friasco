@@ -3,11 +3,10 @@ import { Box, Typography, IconButton, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
+import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Header from "../../../components/Header";
 import CustomHideShowFormGridToolbar from "../../../components/CustomHideShowFormGridToolbar";
-import AddIcon from "@mui/icons-material/Add";
 import NewUserForm from "../../../components/NewUserForm";
 import { fetchUsers, deleteUser } from "../../../data/api";
 
@@ -23,9 +22,9 @@ const Users = () => {
     // TODO: Implement proper user role functionality.
     fetchedUsers.forEach((user, index) => {
       if (index === 0) {
-        user.access = "admin";
+        user.Role = "Admin";
       } else {
-        user.access = "user";
+        user.Role = "User";
       }
     });
 
@@ -57,10 +56,22 @@ const Users = () => {
       flex: 1,
     },
     {
-      field: "accessLevel",
-      headerName: "Access Level",
+      field: "firstName",
+      headerName: "First Name",
       flex: 1,
-      renderCell: ({ row: { access } }) => {
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "lastName",
+      headerName: "Last Name",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "role",
+      headerName: "Role",
+      flex: 1,
+      renderCell: ({ row: { role } }) => {
         return (
           <Box
             width="60%"
@@ -69,16 +80,16 @@ const Users = () => {
             display="flex"
             justifyContent="center"
             backgroundColor={
-              access === "admin"
+              role === "Admin"
                 ? colors.greenAccent[600]
                 : colors.greenAccent[700]
             }
             borderRadius="4px"
           >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "user" && <VerifiedUserOutlinedIcon />}
+            {role === "Admin" && <AdminPanelSettingsOutlinedIcon />}
+            {role === "User" && <VerifiedUserOutlinedIcon />}
             <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
+              {role}
             </Typography>
           </Box>
         );
@@ -103,7 +114,7 @@ const Users = () => {
   ];
 
   return (
-    <Box m="0px 20px">
+    <Box m="0px 20px 20px 20px">
       <Header title="USERS" subtitle="Manage all users" />
 
       <Box
@@ -143,8 +154,6 @@ const Users = () => {
           slots={{
             toolbar: () => (
               <CustomHideShowFormGridToolbar
-                buttonName="CREATE"
-                buttonIcon={<AddIcon />}
                 formToShow={<NewUserForm updateUserGrid={updateUserGrid} />}
               />
             ),
